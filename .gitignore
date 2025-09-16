@@ -2,7 +2,6 @@
 *.jou
 *.log
 *.str
-*.bit
 *.bin
 *.elf
 *.hdf
