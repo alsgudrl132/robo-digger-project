@@ -1,6 +1,8 @@
 [
-  "/home/min/robo-digger-project/soc/platform_pwm/export/platform_pwm",
   "/home/user11/robo-digger-project/soc/platform_joystick/export/platform_joystick",
   "/home/user11/robo-digger-project/soc/platform_pwm/export/platform_pwm",
-  "/home/user11/robo-digger-project/soc/platform_jy/export/platform_jy"
+  "/home/user11/robo-digger-project/soc/platform_jy/export/platform_jy",
+  "/home/min/robo-digger-project/soc/platform_jy/export/platform_jy",
+  "/home/min/robo-digger-project/soc/platform_pwm/export/platform_pwm",
+  "/home/min/robo-digger-project/soc/platform_uart/export/platform_uart"
 ]

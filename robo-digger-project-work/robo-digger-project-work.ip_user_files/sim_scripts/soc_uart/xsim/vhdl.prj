@@ -1,0 +1,14 @@
+vhdl xil_defaultlib  \
+"../../../bd/soc_uart/ip/soc_uart_proc_sys_reset_0_0/sim/soc_uart_proc_sys_reset_0_0.vhd" \
+"../../../bd/soc_uart/ip/soc_uart_microblaze_riscv_0_0/sim/soc_uart_microblaze_riscv_0_0.vhd" \
+"../../../bd/soc_uart/ip/soc_uart_dlmb_v10_0/sim/soc_uart_dlmb_v10_0.vhd" \
+"../../../bd/soc_uart/ip/soc_uart_ilmb_v10_0/sim/soc_uart_ilmb_v10_0.vhd" \
+"../../../bd/soc_uart/ip/soc_uart_dlmb_bram_if_cntlr_0/sim/soc_uart_dlmb_bram_if_cntlr_0.vhd" \
+"../../../bd/soc_uart/ip/soc_uart_ilmb_bram_if_cntlr_0/sim/soc_uart_ilmb_bram_if_cntlr_0.vhd" \
+"../../../bd/soc_uart/ip/soc_uart_mdm_1_0/sim/soc_uart_mdm_1_0.vhd" \
+"../../../bd/soc_uart/ip/soc_uart_axi_smc_1/bd_0/ip/ip_1/sim/bd_db04_psr_aclk_0.vhd" \
+"../../../bd/soc_uart/ip/soc_uart_axi_uartlite_0_2/sim/soc_uart_axi_uartlite_0_2.vhd" \
+"../../../bd/soc_uart/ip/soc_uart_axi_uartlite_1_0/sim/soc_uart_axi_uartlite_1_0.vhd" \
+
+# Do not sort compile order
+nosort

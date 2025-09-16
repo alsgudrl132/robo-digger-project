@@ -1,0 +1,6 @@
+axi_hc05_uart:
+- axi_uartlite
+- uartlite
+axi_usb_uart:
+- axi_uartlite
+- uartlite

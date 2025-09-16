@@ -82,8 +82,8 @@ set_property -dict { PACKAGE_PIN H2   IOSTANDARD LVCMOS33 } [get_ports pwm_6];#S
 set_property -dict { PACKAGE_PIN G3   IOSTANDARD LVCMOS33 } [get_ports pwm_7];#Sch name = JA10
 
 ##Pmod Header JB
-#set_property -dict { PACKAGE_PIN A14   IOSTANDARD LVCMOS33 } [get_ports {buzz}];#Sch name = JB1
-#set_property -dict { PACKAGE_PIN A16   IOSTANDARD LVCMOS33 } [get_ports {buzz_clk}];#Sch name = JB2
+set_property -dict { PACKAGE_PIN A14   IOSTANDARD LVCMOS33 } [get_ports rx_0];#Sch name = JB1
+set_property -dict { PACKAGE_PIN A16   IOSTANDARD LVCMOS33 } [get_ports tx_0];#Sch name = JB2
 #set_property -dict { PACKAGE_PIN B15   IOSTANDARD LVCMOS33 } [get_ports {led_b}];#Sch name = JB3
 #set_property -dict { PACKAGE_PIN B16   IOSTANDARD LVCMOS33 } [get_ports {JB[3]}];#Sch name = JB4
 #set_property -dict { PACKAGE_PIN A15   IOSTANDARD LVCMOS33 } [get_ports {JB[4]}];#Sch name = JB7
