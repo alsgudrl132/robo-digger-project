@@ -1,0 +1,27 @@
+axi_iic_0:
+- axi_iic
+- iic
+axi_uartlite_0:
+- axi_uartlite
+- uartlite
+axi_uartlite_1:
+- axi_uartlite
+- uartlite
+myip_adc_new_0:
+- myip_adc_new
+- None
+myip_btn_0:
+- myip_btn
+- None
+myip_btn_1:
+- myip_btn
+- None
+myip_pwm_0:
+- myip_pwm
+- None
+myip_pwm_1_0:
+- myip_pwm_1
+- None
+myip_pwm_2_0:
+- myip_pwm_2
+- None

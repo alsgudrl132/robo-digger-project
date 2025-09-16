@@ -1,0 +1,1 @@
+{"generate.platform":[{"uri":"/home/user11/robo-digger-project/soc/platform_joystick/vitis-comp.json","md5":"9a0f9198c65bf9fc9663e01567d608ab"},{"uri":"/home/user11/robo-digger-project/soc/platform_joystick/microblaze_riscv_0/standalone_microblaze_riscv_0/bsp/bsp.yaml","md5":"d8734a8eb1fcf6c0b3cef84b1fb7ae1f"}]}
