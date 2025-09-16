@@ -1,0 +1,30 @@
+axi_uartlite_0:
+- axi_uartlite
+- uartlite
+microblaze_riscv_0_axi_intc:
+- axi_intc
+- intc
+myip_pwm_0:
+- myip_pwm
+- None
+myip_pwm_1:
+- myip_pwm
+- None
+myip_pwm_2:
+- myip_pwm
+- None
+myip_pwm_3:
+- myip_pwm
+- None
+myip_pwm_4:
+- myip_pwm
+- None
+myip_pwm_5:
+- myip_pwm
+- None
+myip_pwm_6:
+- myip_pwm
+- None
+myip_pwm_7:
+- myip_pwm
+- None
