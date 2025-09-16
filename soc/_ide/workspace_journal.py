@@ -1,4 +1,4 @@
-# 2025-09-16T18:36:24.684812
+# 2025-09-16T18:54:26.595127
 import vitis
 
 client = vitis.create_client()
@@ -10,7 +10,6 @@ status = platform.build()
 comp = client.get_component(name="app_pwm")
 comp.build()
 
-status = platform.build()
 
 comp.build()
 

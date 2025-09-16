@@ -22,7 +22,7 @@
 #include <unistd.h>
 
 #define SYS_CLK_FREQ 100000000
-#define PWM_BASEADDR XPAR_MYIP_PWM_0_BASEADDR // 서보 연결 PWM
+#define PWM_BASEADDR XPAR_MYIP_PWM_1_BASEADDR // 서보 연결 PWM
 #define REG_DUTY      0x0
 #define REG_TEMP      0x4
 #define REG_DUTYSTEP  0x8
