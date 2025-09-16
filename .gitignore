@@ -19,8 +19,6 @@
 *.manifest
 
 # ==== Vitis workspace / IDE personal settings ====
-.vitis
-.settings/
 .debug/
 
 # ==== OS / editor files ====
