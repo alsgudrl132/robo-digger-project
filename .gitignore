@@ -1,0 +1,30 @@
+# ==== Vivado build / temporary files ====
+*.jou
+*.log
+*.str
+*.bit
+*.bin
+*.elf
+*.hdf
+*.Xil
+*.runs
+*.webtalk
+*.hw
+*.sdk
+*.cache
+*.xml
+*.backup
+*.tmp
+*.bld
+*.manifest
+
+# ==== Vitis workspace / IDE personal settings ====
+.vitis
+.settings/
+.debug/
+
+# ==== OS / editor files ====
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
