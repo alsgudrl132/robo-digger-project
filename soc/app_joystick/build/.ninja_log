@@ -1,7 +1,0 @@
-# ninja log v5
-1	127	1758015222087427356	CMakeFiles/app_joystick.elf.dir/helloworld.c.obj	1be8c7dfcb6bad73
-3	97	1758015222058428781	CMakeFiles/app_joystick.elf.dir/platform.c.obj	11d5673df3fa9eed
-127	260	1758015222190968608	app_joystick.elf	217bc1fe5f248e24
-1	92	1758015377750434600	CMakeFiles/app_joystick.elf.dir/platform.c.obj	11d5673df3fa9eed
-1	131	1758015377793432832	CMakeFiles/app_joystick.elf.dir/helloworld.c.obj	1be8c7dfcb6bad73
-131	243	1758015377876429420	app_joystick.elf	217bc1fe5f248e24

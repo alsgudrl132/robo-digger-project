@@ -1,3 +1,0 @@
-/home/user11/robo-digger-project/soc/app_joystick/build/CMakeFiles/app_joystick.elf.dir
-/home/user11/robo-digger-project/soc/app_joystick/build/CMakeFiles/edit_cache.dir
-/home/user11/robo-digger-project/soc/app_joystick/build/CMakeFiles/rebuild_cache.dir
