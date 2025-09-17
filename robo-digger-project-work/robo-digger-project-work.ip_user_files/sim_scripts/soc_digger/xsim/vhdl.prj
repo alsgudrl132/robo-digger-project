@@ -1,0 +1,14 @@
+vhdl xil_defaultlib  \
+"../../../bd/soc_digger/ip/soc_digger_proc_sys_reset_0_0/sim/soc_digger_proc_sys_reset_0_0.vhd" \
+"../../../bd/soc_digger/ip/soc_digger_microblaze_riscv_0_0/sim/soc_digger_microblaze_riscv_0_0.vhd" \
+"../../../bd/soc_digger/ip/soc_digger_dlmb_v10_0/sim/soc_digger_dlmb_v10_0.vhd" \
+"../../../bd/soc_digger/ip/soc_digger_ilmb_v10_0/sim/soc_digger_ilmb_v10_0.vhd" \
+"../../../bd/soc_digger/ip/soc_digger_dlmb_bram_if_cntlr_0/sim/soc_digger_dlmb_bram_if_cntlr_0.vhd" \
+"../../../bd/soc_digger/ip/soc_digger_ilmb_bram_if_cntlr_0/sim/soc_digger_ilmb_bram_if_cntlr_0.vhd" \
+"../../../bd/soc_digger/ip/soc_digger_microblaze_riscv_0_axi_intc_0/sim/soc_digger_microblaze_riscv_0_axi_intc_0.vhd" \
+"../../../bd/soc_digger/ip/soc_digger_mdm_1_0/sim/soc_digger_mdm_1_0.vhd" \
+"../../../bd/soc_digger/ip/soc_digger_axi_uartlite_0_0/sim/soc_digger_axi_uartlite_0_0.vhd" \
+"../../../bd/soc_digger/ip/soc_digger_axi_uartlite_0_1/sim/soc_digger_axi_uartlite_0_1.vhd" \
+
+# Do not sort compile order
+nosort

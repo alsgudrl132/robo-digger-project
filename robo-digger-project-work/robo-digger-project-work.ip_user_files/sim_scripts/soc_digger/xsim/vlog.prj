@@ -1,0 +1,26 @@
+verilog xil_defaultlib --include "/tools/Xilinx/Vivado/2024.2/data/xilinx_vip/include" --include "../../../../robo-digger-project-work.gen/sources_1/bd/soc_digger/ipshared/3cbc" --include "../../../../robo-digger-project-work.gen/sources_1/bd/soc_digger/ipshared/ec67/hdl" \
+"../../../bd/soc_digger/ip/soc_digger_clk_wiz_0/soc_digger_clk_wiz_0_clk_wiz.v" \
+"../../../bd/soc_digger/ip/soc_digger_clk_wiz_0/soc_digger_clk_wiz_0.v" \
+"../../../bd/soc_digger/ip/soc_digger_lmb_bram_0/sim/soc_digger_lmb_bram_0.v" \
+"../../../bd/soc_digger/ip/soc_digger_microblaze_riscv_0_axi_periph_imp_xbar_0/sim/soc_digger_microblaze_riscv_0_axi_periph_imp_xbar_0.v" \
+"../../../bd/soc_digger/ip/soc_digger_microblaze_riscv_0_xlconcat_0/sim/soc_digger_microblaze_riscv_0_xlconcat_0.v" \
+"../../../bd/soc_digger/ipshared/bde8/hdl/myip_pwm_slave_lite_v1_0_S00_AXI.v" \
+"../../../bd/soc_digger/ipshared/bde8/src/countre.v" \
+"../../../bd/soc_digger/ipshared/bde8/src/test.v" \
+"../../../bd/soc_digger/ipshared/bde8/hdl/myip_pwm.v" \
+"../../../bd/soc_digger/ip/soc_digger_myip_pwm_0_0/sim/soc_digger_myip_pwm_0_0.v" \
+"../../../bd/soc_digger/ip/soc_digger_myip_pwm_0_1/sim/soc_digger_myip_pwm_0_1.v" \
+"../../../bd/soc_digger/ip/soc_digger_myip_pwm_0_2/sim/soc_digger_myip_pwm_0_2.v" \
+"../../../bd/soc_digger/ip/soc_digger_myip_pwm_0_3/sim/soc_digger_myip_pwm_0_3.v" \
+"../../../bd/soc_digger/ip/soc_digger_myip_pwm_0_4/sim/soc_digger_myip_pwm_0_4.v" \
+"../../../bd/soc_digger/ip/soc_digger_myip_pwm_0_5/sim/soc_digger_myip_pwm_0_5.v" \
+"../../../bd/soc_digger/ip/soc_digger_myip_pwm_0_6/sim/soc_digger_myip_pwm_0_6.v" \
+"../../../bd/soc_digger/ip/soc_digger_myip_pwm_0_7/sim/soc_digger_myip_pwm_0_7.v" \
+"../../../bd/soc_digger/ip/soc_digger_myip_pwm_0_8/sim/soc_digger_myip_pwm_0_8.v" \
+"../../../bd/soc_digger/ip/soc_digger_myip_pwm_0_9/sim/soc_digger_myip_pwm_0_9.v" \
+"../../../bd/soc_digger/sim/soc_digger.v" \
+
+verilog xil_defaultlib "glbl.v"
+
+# Do not sort compile order
+nosort
