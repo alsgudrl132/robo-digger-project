@@ -234,26 +234,28 @@ int main(void)
                 char ch = RecvBuffer[i];
                 
                 // 제어 문자나 구분자 확인 (줄바꿈, 캐리지리턴, 콤마 등)
-                if (ch == '\r' || ch == '\n' || ch == 0 || line_index >= LINE_BUFFER_SIZE - 1) {
-                    if (line_index > 0) {
-                        line_buffer[line_index] = '\0';
-                        
-                        // 완성된 라인 출력
-                        simple_uart_send_string("Line: ");
-                        simple_uart_send_string(line_buffer);
-                        simple_uart_send_string("\r\n");
-                        
-                        // 메시지 처리
-                        process_complete_message(line_buffer);
-                        
-                        // 버퍼 리셋
-                        line_index = 0;
-                        memset(line_buffer, 0, LINE_BUFFER_SIZE);
-                    }
-                }
-                else if (ch >= 32 && ch <= 126) {  // 출력 가능한 ASCII만 저장
-                    line_buffer[line_index++] = ch;
-                }
+                if (ch == '\n') {  // 메시지 끝
+    if (line_index > 0) {
+        line_buffer[line_index] = '\0';
+
+        // 디버그 출력
+        simple_uart_send_string("Line: ");
+        simple_uart_send_string(line_buffer);
+        simple_uart_send_string("\r\n");
+
+        // 메시지 파싱
+        process_complete_message(line_buffer);
+    }
+    // 버퍼 리셋
+    line_index = 0;
+    memset(line_buffer, 0, LINE_BUFFER_SIZE);
+}
+else if (ch != '\r' && ch >= 32 && ch <= 126) {  
+    // 출력 가능한 ASCII만 저장, '\r'은 무시
+    if (line_index < LINE_BUFFER_SIZE - 1) {
+        line_buffer[line_index++] = ch;
+    }
+}
                 
                 // MODE로 시작하는 새로운 메시지 감지
                 // if (line_index >= 5 && strncmp(line_buffer + line_index - 5, "MODE=", 5) == 0 && line_index > 5) {
@@ -273,19 +275,19 @@ int main(void)
             }
             
             // 주기적으로 긴 메시지 처리 (타임아웃 방식)
-            static int timeout_counter = 0;
-            timeout_counter++;
-            if (timeout_counter > 1000 && line_index > 0) {  // 적당한 타임아웃
-                line_buffer[line_index] = '\0';
-                simple_uart_send_string("Timeout: ");
-                simple_uart_send_string(line_buffer);
-                simple_uart_send_string("\r\n");
-                process_complete_message(line_buffer);
+            // static int timeout_counter = 0;
+            // timeout_counter++;
+            // if (timeout_counter > 1000 && line_index > 0) {  // 적당한 타임아웃
+            //     line_buffer[line_index] = '\0';
+            //     simple_uart_send_string("Timeout: ");
+            //     simple_uart_send_string(line_buffer);
+            //     simple_uart_send_string("\r\n");
+            //     process_complete_message(line_buffer);
                 
-                line_index = 0;
-                memset(line_buffer, 0, LINE_BUFFER_SIZE);
-                timeout_counter = 0;
-            }
+            //     line_index = 0;
+            //     memset(line_buffer, 0, LINE_BUFFER_SIZE);
+            //     timeout_counter = 0;
+            // }
         }
     }
 
