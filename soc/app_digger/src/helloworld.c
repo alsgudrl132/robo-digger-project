@@ -1,143 +1,254 @@
 /******************************************************************************
-* Copyright (C) 2023 Advanced Micro Devices, Inc.
-* SPDX-License-Identifier: MIT
+* 라인 단위로 메시지를 처리하는 HC-05 파싱 코드
 ******************************************************************************/
-/*
- * helloworld.c: HC-05 to USB UART Bridge with [MODE:x] Parsing
- *
- * HC-05 (블루투스 모듈)에서 수신한 문자열을 USB UART로 전달하고
- * "[MODE:x] X1=####,Y1=####,X2=####,Y2=####" 형식 데이터를 파싱.
- */
 
 #include "xuartlite.h"
 #include "xparameters.h"
-#include "xil_printf.h"
+#include "xil_io.h"
 #include <string.h>
-#include "sleep.h"
 #include <stdio.h>
 
-// =================== 설정 ===================
-#define HC05_UART_DEVICE_ID XPAR_XUARTLITE_0_BASEADDR // HC-05 연결
-#define USB_UART_DEVICE_ID XPAR_XUARTLITE_1_BASEADDR  // USB-UART 연결
+typedef unsigned char u8;
 
-#define RECV_BUFFER_SIZE   16
-#define ACCUM_BUFFER_SIZE  256
+#define HC05_UART_DEVICE_ID XPAR_XUARTLITE_0_BASEADDR
+#define USB_UART_BASEADDR   XPAR_XUARTLITE_1_BASEADDR
 
-// =================== 전역 ===================
+#define PWM_0_ADDR XPAR_MYIP_PWM_0_BASEADDR
+#define PWM_1_ADDR XPAR_MYIP_PWM_1_BASEADDR  // Y1용 PWM
+#define PWM_2_ADDR XPAR_MYIP_PWM_2_BASEADDR  // X2용 PWM  
+#define PWM_3_ADDR XPAR_MYIP_PWM_3_BASEADDR  // Y2용 PWM
+#define SYS_CLK_FREQ  100000000  
+#define REG_DUTY      0x0
+#define REG_TEMP      0x4
+#define REG_DUTYSTEP  0x8
+
+#define BUFFER_SIZE   512
+#define LINE_BUFFER_SIZE 256
+#define RANGE_MIN     2100
+#define RANGE_MAX     2200
+
 XUartLite Uart_HC05;
-XUartLite Uart_USB;
+static int x1_angle = 90;
+static int y1_angle = 90;  // Y1 각도
+static int x2_angle = 90;  // X2 각도
+static int y2_angle = 90;  // Y2 각도
 
-// 데이터 누적 버퍼
-static u8 AccumBuffer[ACCUM_BUFFER_SIZE];
-static int AccumCount = 0;
+// 라인 누적용 버퍼
+static char line_buffer[LINE_BUFFER_SIZE];
+static int line_index = 0;
 
-typedef struct {
-    int mode;
-    int x1;
-    int y1;
-    int x2;
-    int y2;
-} ParsedData;
+// =================== 함수 선언 ===================
+void servoHandler(int mode, int x1, int y1, int x2, int y2);
+uint32_t angle_to_duty(uint32_t angle, uint32_t duty_step);
+void pwm_set(uint32_t base, uint32_t duty, uint32_t pwm_freq, uint32_t duty_step);
+void process_complete_message(const char* message);
+int extract_number_after_key(const char* str, const char* key);
+void control_servo(int value, int* angle, uint32_t pwm_addr, const char* name);  // 새로운 함수
 
-void ProcessCompleteMessage(void);
-int FindMessageEnd(u8* buffer, int length);
-
-int main(void)
-{
-    int Status;
-    u8 RecvBuffer[RECV_BUFFER_SIZE];
-    int ReceivedCount;
-
-    xil_printf("HC-05 to USB UART Bridge Start\r\n");
-
-    // HC-05 UART 초기화
-    Status = XUartLite_Initialize(&Uart_HC05, HC05_UART_DEVICE_ID);
-    if (Status != XST_SUCCESS) {
-        xil_printf("HC-05 UART Init Failed\r\n");
-        return XST_FAILURE;
-    }
-
-    // USB UART 초기화
-    Status = XUartLite_Initialize(&Uart_USB, USB_UART_DEVICE_ID);
-    if (Status != XST_SUCCESS) {
-        xil_printf("USB UART Init Failed\r\n");
-        return XST_FAILURE;
-    }
-
-    xil_printf("UART Init Success\r\n");
-
-    memset(AccumBuffer, 0, ACCUM_BUFFER_SIZE);
-    AccumCount = 0;
-
-    while (1) {
-        // HC-05에서 데이터 수신
-        ReceivedCount = XUartLite_Recv(&Uart_HC05, RecvBuffer, RECV_BUFFER_SIZE);
-
-        if (ReceivedCount > 0) {
-            if (AccumCount + ReceivedCount >= ACCUM_BUFFER_SIZE) {
-                xil_printf("Buffer overflow, resetting\r\n");
-                AccumCount = 0;
-                continue;
-            }
-
-            memcpy(&AccumBuffer[AccumCount], RecvBuffer, ReceivedCount);
-            AccumCount += ReceivedCount;
-
-            int messageEndPos = FindMessageEnd(AccumBuffer, AccumCount);
-            if (messageEndPos >= 0) {
-                AccumBuffer[messageEndPos] = '\0'; // 문자열 종료
-                ProcessCompleteMessage();
-
-                int remainingBytes = AccumCount - messageEndPos - 1;
-                if (remainingBytes > 0) {
-                    memmove(AccumBuffer, &AccumBuffer[messageEndPos + 1], remainingBytes);
-                    AccumCount = remainingBytes;
-                } else {
-                    AccumCount = 0;
-                }
-            }
+// =================== simple UART 함수 ===================
+int simple_uart_send_char(char c) {
+    int timeout = 10000;
+    while (Xil_In32(USB_UART_BASEADDR + 0x8) & 0x8) {
+        if(--timeout <= 0) {
+            return -1;
         }
-        usleep(100);
     }
-
+    Xil_Out8(USB_UART_BASEADDR + 0x4, c);
     return 0;
 }
 
-int FindMessageEnd(u8* buffer, int length)
-{
-    for (int i = 0; i < length; i++) {
-        if (buffer[i] == '\n' || buffer[i] == '\r') {
-            return i;
-        }
+void simple_uart_send_string(const char *str) {
+    while(*str) {
+        simple_uart_send_char(*str++);
     }
-    return -1;
 }
 
-void ProcessCompleteMessage(void)
+// =================== 파싱 함수 ===================
+int extract_number_after_key(const char* str, const char* key) {
+    char* pos = strstr(str, key);
+    if (pos == NULL) return 0;
+    
+    pos = strchr(pos, '=');
+    if (pos == NULL) return 0;
+    
+    pos++; // '=' 다음으로 이동
+    
+    // 음수 처리
+    int sign = 1;
+    if (*pos == '-') {
+        sign = -1;
+        pos++;
+    }
+    
+    int value = 0;
+    while (*pos >= '0' && *pos <= '9') {
+        value = value * 10 + (*pos - '0');
+        pos++;
+    }
+    
+    return value * sign;
+}
+
+void process_complete_message(const char* message) {
+    // MODE가 있는 메시지만 처리
+    if (strstr(message, "MODE=") == NULL) {
+        return;
+    }
+    
+    // 각 값 추출
+    int mode = extract_number_after_key(message, "MODE");
+    int x1 = extract_number_after_key(message, "X1");
+    int y1 = extract_number_after_key(message, "Y1");
+    int x2 = extract_number_after_key(message, "X2");
+    int y2 = extract_number_after_key(message, "Y2");
+    
+    // 디버그 출력
+    char debug_buf[128];
+    snprintf(debug_buf, sizeof(debug_buf), "MODE=%d, X1=%d, Y1=%d, X2=%d, Y2=%d\r\n", 
+             mode, x1, y1, x2, y2);
+    simple_uart_send_string(debug_buf);
+    
+    // 서보 제어
+    servoHandler(mode, x1, y1, x2, y2);
+}
+
+// =================== 서보 제어 함수 ===================
+void control_servo(int value, int* angle, uint32_t pwm_addr, const char* name) {
+    uint32_t duty_step = 4095;
+    uint32_t duty;
+    
+    if(value < RANGE_MIN && value > 0) {
+        *angle -= 3;  // 더 빠른 움직임 (원래 1에서 3으로 증가)
+        if(*angle < 0) *angle = 0;
+        duty = angle_to_duty(*angle, duty_step);
+        pwm_set(pwm_addr, duty, 50, duty_step);
+        
+        char angle_buf[32];
+        snprintf(angle_buf, sizeof(angle_buf), "%s Angle decreased to: %d\r\n", name, *angle);
+        simple_uart_send_string(angle_buf);
+    }
+    else if(value > RANGE_MAX) {
+        *angle += 3;  // 더 빠른 움직임 (원래 1에서 3으로 증가)
+        if(*angle > 180) *angle = 180;
+        duty = angle_to_duty(*angle, duty_step);
+        pwm_set(pwm_addr, duty, 50, duty_step);
+        
+        char angle_buf[32];
+        snprintf(angle_buf, sizeof(angle_buf), "%s Angle increased to: %d\r\n", name, *angle);
+        simple_uart_send_string(angle_buf);
+    }
+}
+
+void servoHandler(int mode, int x1, int y1, int x2, int y2)
 {
-    ParsedData data;
-    data.mode = data.x1 = data.y1 = data.x2 = data.y2 = 0;
-
-    // "[MODE:2] X1=2159,Y1=1810,X2=2202,Y2=2187" 형식 파싱
-    if (sscanf((char*)AccumBuffer,
-               "[MODE:%d] X1=%d,Y1=%d,X2=%d,Y2=%d",
-               &data.mode, &data.x1, &data.y1, &data.x2, &data.y2) == 5) {
-
-        xil_printf("Parsed Data:\r\n");
-        xil_printf(" Mode = %d\r\n", data.mode);
-        xil_printf(" X1   = %d\r\n", data.x1);
-        xil_printf(" Y1   = %d\r\n", data.y1);
-        xil_printf(" X2   = %d\r\n", data.x2);
-        xil_printf(" Y2   = %d\r\n", data.y2);
-
-        // USB UART로 파싱 결과 전송
-        char outbuf[128];
-        int len = sprintf(outbuf,
-                          "Mode=%d, X1=%d, Y1=%d, X2=%d, Y2=%d\r\n",
-                          data.mode, data.x1, data.y1, data.x2, data.y2);
-        XUartLite_Send(&Uart_USB, (u8*)outbuf, len);
+    if(mode == 1)
+    {
+        // 모든 서보를 동일한 로직으로 제어
+        control_servo(x1, &x1_angle, PWM_0_ADDR, "X1");
+        control_servo(y1, &y1_angle, PWM_1_ADDR, "Y1");
+        control_servo(x2, &x2_angle, PWM_2_ADDR, "X2");
+        control_servo(y2, &y2_angle, PWM_3_ADDR, "Y2");
     }
-    else {
-        xil_printf("Parse failed: %s\r\n", (char*)AccumBuffer);
+    else if(mode == -1) {
+        simple_uart_send_string("Mode -1: No servo control\r\n");
     }
+}
+
+uint32_t angle_to_duty(uint32_t angle, uint32_t duty_step) {
+    uint32_t duty_min = duty_step * 5 / 200;
+    uint32_t duty_max = duty_step * 25 / 200;
+    return duty_min + ((duty_max - duty_min) * angle) / 180;
+}
+
+void pwm_set(uint32_t base, uint32_t duty, uint32_t pwm_freq, uint32_t duty_step) {
+    uint32_t temp = SYS_CLK_FREQ / pwm_freq / duty_step / 2;
+    Xil_Out32(base + REG_DUTY, duty);
+    Xil_Out32(base + REG_TEMP, temp);
+    Xil_Out32(base + REG_DUTYSTEP, duty_step);
+}
+
+// =================== 메인 ===================
+int main(void)
+{
+    int Status;
+    u8 RecvBuffer[BUFFER_SIZE];
+    int ReceivedCount;
+
+    // UART 초기화
+    Status = XUartLite_Initialize(&Uart_HC05, HC05_UART_DEVICE_ID);
+    if(Status != XST_SUCCESS) return XST_FAILURE;
+
+    // 시작 메시지
+    simple_uart_send_string("=== Line-based Parsing Start ===\r\n");
+
+    // 버퍼 초기화
+    memset(line_buffer, 0, LINE_BUFFER_SIZE);
+    line_index = 0;
+
+    while (1) {
+        // HC-05에서 데이터 수신
+        ReceivedCount = XUartLite_Recv(&Uart_HC05, RecvBuffer, sizeof(RecvBuffer)-1);
+
+        if (ReceivedCount > 0) {
+            // 받은 데이터를 한 바이트씩 처리
+            for (int i = 0; i < ReceivedCount; i++) {
+                char ch = RecvBuffer[i];
+                
+                // 제어 문자나 구분자 확인 (줄바꿈, 캐리지리턴, 콤마 등)
+                if (ch == '\r' || ch == '\n' || ch == 0 || line_index >= LINE_BUFFER_SIZE - 1) {
+                    if (line_index > 0) {
+                        line_buffer[line_index] = '\0';
+                        
+                        // 완성된 라인 출력
+                        simple_uart_send_string("Line: ");
+                        simple_uart_send_string(line_buffer);
+                        simple_uart_send_string("\r\n");
+                        
+                        // 메시지 처리
+                        process_complete_message(line_buffer);
+                        
+                        // 버퍼 리셋
+                        line_index = 0;
+                        memset(line_buffer, 0, LINE_BUFFER_SIZE);
+                    }
+                }
+                else if (ch >= 32 && ch <= 126) {  // 출력 가능한 ASCII만 저장
+                    line_buffer[line_index++] = ch;
+                }
+                
+                // MODE로 시작하는 새로운 메시지 감지
+                if (line_index >= 5 && strncmp(line_buffer + line_index - 5, "MODE=", 5) == 0 && line_index > 5) {
+                    // 이전 메시지 처리
+                    line_buffer[line_index - 5] = '\0';
+                    if (strlen(line_buffer) > 0) {
+                        simple_uart_send_string("Auto-split: ");
+                        simple_uart_send_string(line_buffer);
+                        simple_uart_send_string("\r\n");
+                        process_complete_message(line_buffer);
+                    }
+                    
+                    // 새 메시지 시작
+                    strcpy(line_buffer, "MODE=");
+                    line_index = 5;
+                }
+            }
+            
+            // 주기적으로 긴 메시지 처리 (타임아웃 방식)
+            static int timeout_counter = 0;
+            timeout_counter++;
+            if (timeout_counter > 1000 && line_index > 0) {  // 적당한 타임아웃
+                line_buffer[line_index] = '\0';
+                simple_uart_send_string("Timeout: ");
+                simple_uart_send_string(line_buffer);
+                simple_uart_send_string("\r\n");
+                process_complete_message(line_buffer);
+                
+                line_index = 0;
+                memset(line_buffer, 0, LINE_BUFFER_SIZE);
+                timeout_counter = 0;
+            }
+        }
+    }
+
+    return 0;
 }
