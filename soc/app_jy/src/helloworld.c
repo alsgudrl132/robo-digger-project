@@ -169,7 +169,7 @@ int send_joystick_mode_data(uint32_t *vals, int mode) {
     char buf[128];
     int len = snprintf(buf, sizeof(buf),
         "MODE:%d\r\nX1:%u\r\nY1:%u\r\nX2:%u\r\nY2:%u\r\nEND\r\n",
-        mode, vals[0], vals[1], vals[2], vals[3]);
+        mode, vals[3], vals[2], vals[1], vals[0]);
     return simple_uart_send_string(buf);
 }
 
@@ -203,7 +203,7 @@ int main() {
     
     u32 adc_raw[4];
     int idle_counter = 0;
-    int current_mode = -1;  // 현재 모드 (-1: 대기 상태)
+    int current_mode = 1;  // 현재 모드 (-1: 대기 상태)
     int display_counter = 0;
     
     // 버튼 디바운싱 변수들
@@ -275,9 +275,9 @@ int main() {
         if(active) {
             idle_counter = 0;
             send_joystick_mode_data(adc_scaled, current_mode);
-            xil_printf("[MODE:%d] X1=%u,Y1=%u,X2=%u,Y2=%u\r\n",
-                current_mode, adc_scaled[0], adc_scaled[1],
-                adc_scaled[2], adc_scaled[3]);
+            xil_printf("MODE=%d,X1=%u,Y1=%u,X2=%u,Y2=%u",
+                current_mode, adc_scaled[3], adc_scaled[2],
+                adc_scaled[1], adc_scaled[0]);
         } else {
             idle_counter++;
             if(idle_counter == 1) send_neutral_mode(current_mode);

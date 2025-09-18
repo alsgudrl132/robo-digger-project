@@ -113,7 +113,6 @@ comp.build()
 platform = client.get_component(name="platform_uart")
 status = platform.build()
 
-comp = client.get_component(name="app_uart")
 comp.build()
 
 platform = client.get_component(name="platform_digger")

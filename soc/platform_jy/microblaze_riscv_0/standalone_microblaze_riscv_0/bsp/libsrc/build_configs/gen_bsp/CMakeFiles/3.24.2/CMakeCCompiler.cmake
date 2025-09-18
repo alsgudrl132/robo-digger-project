@@ -1,4 +1,4 @@
-set(CMAKE_C_COMPILER "/tools/Xilinx/Vitis/2024.2/gnu/riscv/lin/riscv64-unknown-elf/bin/riscv64-unknown-elf-gcc")
+set(CMAKE_C_COMPILER "/home/user11/tools/Vitis/2024.2/gnu/riscv/lin/riscv64-unknown-elf/bin/riscv64-unknown-elf-gcc")
 set(CMAKE_C_COMPILER_ARG1 "")
 set(CMAKE_C_COMPILER_ID "GNU")
 set(CMAKE_C_COMPILER_VERSION "13.3.0")
@@ -18,15 +18,15 @@ set(CMAKE_C_SIMULATE_ID "")
 set(CMAKE_C_COMPILER_FRONTEND_VARIANT "")
 set(CMAKE_C_SIMULATE_VERSION "")
 
-set(CMAKE_C_COMPILER_SYSROOT "/tools/Xilinx/Vitis/2024.2/gnu/riscv/lin/riscv64-unknown-elf/bin/../riscv32-xilinx-elf/usr")
-set(CMAKE_COMPILER_SYSROOT "/tools/Xilinx/Vitis/2024.2/gnu/riscv/lin/riscv64-unknown-elf/bin/../riscv32-xilinx-elf/usr")
+set(CMAKE_C_COMPILER_SYSROOT "/home/user11/tools/Vitis/2024.2/gnu/riscv/lin/riscv64-unknown-elf/bin/../riscv32-xilinx-elf/usr")
+set(CMAKE_COMPILER_SYSROOT "/home/user11/tools/Vitis/2024.2/gnu/riscv/lin/riscv64-unknown-elf/bin/../riscv32-xilinx-elf/usr")
 
 
 set(CMAKE_AR "riscv64-unknown-elf-ar")
-set(CMAKE_C_COMPILER_AR "/tools/Xilinx/Vitis/2024.2/gnu/riscv/lin/riscv64-unknown-elf/bin/riscv64-unknown-elf-gcc-ar")
-set(CMAKE_RANLIB "/tools/Xilinx/Vitis/2024.2/gnu/riscv/lin/riscv64-unknown-elf/bin/riscv64-unknown-elf-ranlib")
-set(CMAKE_C_COMPILER_RANLIB "/tools/Xilinx/Vitis/2024.2/gnu/riscv/lin/riscv64-unknown-elf/bin/riscv64-unknown-elf-gcc-ranlib")
-set(CMAKE_LINKER "/tools/Xilinx/Vitis/2024.2/gnu/riscv/lin/riscv64-unknown-elf/bin/riscv64-unknown-elf-ld")
+set(CMAKE_C_COMPILER_AR "/home/user11/tools/Vitis/2024.2/gnu/riscv/lin/riscv64-unknown-elf/bin/riscv64-unknown-elf-gcc-ar")
+set(CMAKE_RANLIB "/home/user11/tools/Vitis/2024.2/gnu/riscv/lin/riscv64-unknown-elf/bin/riscv64-unknown-elf-ranlib")
+set(CMAKE_C_COMPILER_RANLIB "/home/user11/tools/Vitis/2024.2/gnu/riscv/lin/riscv64-unknown-elf/bin/riscv64-unknown-elf-gcc-ranlib")
+set(CMAKE_LINKER "/home/user11/tools/Vitis/2024.2/gnu/riscv/lin/riscv64-unknown-elf/bin/riscv64-unknown-elf-ld")
 set(CMAKE_MT "")
 set(CMAKE_COMPILER_IS_GNUCC 1)
 set(CMAKE_C_COMPILER_LOADED 1)
@@ -67,7 +67,7 @@ endif()
 
 
 
-set(CMAKE_C_IMPLICIT_INCLUDE_DIRECTORIES "/home/min/robo-digger-project/soc/platform_jy/microblaze_riscv_0/standalone_microblaze_riscv_0/bsp/include;/tools/Xilinx/Vitis/2024.2/gnu/riscv/lin/riscv64-unknown-elf/x86_64-oesdk-linux/usr/lib/riscv32-xilinx-elf/gcc/riscv32-xilinx-elf/13.3.0/include;/tools/Xilinx/Vitis/2024.2/gnu/riscv/lin/riscv64-unknown-elf/x86_64-oesdk-linux/usr/lib/riscv32-xilinx-elf/gcc/riscv32-xilinx-elf/13.3.0/include-fixed;/tools/Xilinx/Vitis/2024.2/gnu/riscv/lin/riscv64-unknown-elf/riscv32-xilinx-elf/usr/include")
+set(CMAKE_C_IMPLICIT_INCLUDE_DIRECTORIES "/home/user11/robo-digger-project/soc/platform_jy/microblaze_riscv_0/standalone_microblaze_riscv_0/bsp/include;/home/user11/tools/Vitis/2024.2/gnu/riscv/lin/riscv64-unknown-elf/x86_64-oesdk-linux/usr/lib/riscv32-xilinx-elf/gcc/riscv32-xilinx-elf/13.3.0/include;/home/user11/tools/Vitis/2024.2/gnu/riscv/lin/riscv64-unknown-elf/x86_64-oesdk-linux/usr/lib/riscv32-xilinx-elf/gcc/riscv32-xilinx-elf/13.3.0/include-fixed;/home/user11/tools/Vitis/2024.2/gnu/riscv/lin/riscv64-unknown-elf/riscv32-xilinx-elf/usr/include")
 set(CMAKE_C_IMPLICIT_LINK_LIBRARIES "")
 set(CMAKE_C_IMPLICIT_LINK_DIRECTORIES "")
 set(CMAKE_C_IMPLICIT_LINK_FRAMEWORK_DIRECTORIES "")

@@ -1,5 +1,5 @@
 create libxil.a
-addlib /home/min/robo-digger-project/soc/platform_jy/microblaze_riscv_0/standalone_microblaze_riscv_0/bsp/libsrc/build_configs/gen_bsp/libsrc/uartlite/src/libuartlite.a
-addlib /home/min/robo-digger-project/soc/platform_jy/microblaze_riscv_0/standalone_microblaze_riscv_0/bsp/libsrc/build_configs/gen_bsp/libsrc/iic/src/libiic.a
+addlib /home/user11/robo-digger-project/soc/platform_jy/microblaze_riscv_0/standalone_microblaze_riscv_0/bsp/libsrc/build_configs/gen_bsp/libsrc/uartlite/src/libuartlite.a
+addlib /home/user11/robo-digger-project/soc/platform_jy/microblaze_riscv_0/standalone_microblaze_riscv_0/bsp/libsrc/build_configs/gen_bsp/libsrc/iic/src/libiic.a
 save
 end
