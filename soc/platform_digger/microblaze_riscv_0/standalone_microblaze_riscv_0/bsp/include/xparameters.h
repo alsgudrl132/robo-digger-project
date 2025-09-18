@@ -75,6 +75,14 @@
 #define XPAR_XUARTLITE_1_ODD_PARITY 0x0
 #define XPAR_XUARTLITE_1_USE_PARITY 0x0
 
+/* Definitions for peripheral MYIP_HANDLE_0 */
+#define XPAR_MYIP_HANDLE_0_BASEADDR 0x44aa0000
+#define XPAR_MYIP_HANDLE_0_HIGHADDR 0x44aaffff
+
+/* Canonical definitions for peripheral MYIP_HANDLE_0 */
+#define XPAR_MYIP_HANDLE_0_BASEADDR 0x44aa0000
+#define XPAR_MYIP_HANDLE_0_HIGHADDR 0x44aaffff
+
 /* Definitions for peripheral MYIP_PWM_0 */
 #define XPAR_MYIP_PWM_0_BASEADDR 0x44a00000
 #define XPAR_MYIP_PWM_0_HIGHADDR 0x44a0ffff

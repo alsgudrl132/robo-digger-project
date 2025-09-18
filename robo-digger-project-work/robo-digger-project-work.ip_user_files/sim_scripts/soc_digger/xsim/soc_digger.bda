@@ -458,6 +458,24 @@
                 "SV": "user.org:user:myip_pwm:1.0",
                 "TM": "both",
                 "TU": "register"
+            },
+            "V18": {
+                "VT": "AC",
+                "BA": "0x44AA0000",
+                "HA": "0x44AAFFFF",
+                "BP": "C_S00_AXI_BASEADDR",
+                "HP": "C_S00_AXI_HIGHADDR",
+                "MA": "Data",
+                "MX": "/microblaze_riscv_0",
+                "MI": "M_AXI_DP",
+                "MS": "SEG_myip_handle_0_S00_AXI_reg",
+                "MV": "xilinx.com:ip:microblaze_riscv:1.0",
+                "SX": "/myip_handle_0",
+                "SI": "S00_AXI",
+                "SS": "S00_AXI_reg",
+                "SV": "user.org:user:myip_handle:1.0",
+                "TM": "both",
+                "TU": "register"
             }
         },
         "edges": [
@@ -541,6 +559,11 @@
             },
             {
                 "src": "V17",
+                "trg": "V2",
+                "EH": "2"
+            },
+            {
+                "src": "V18",
                 "trg": "V2",
                 "EH": "2"
             }

@@ -163,6 +163,7 @@ drv_info:
     driver: intc
     ip_name: axi_intc
     path: /tools/Xilinx/Vitis/2024.2/data/embeddedsw/XilinxProcessorIPLib/drivers/intc_v3_19
+  myip_handle_0: None
   myip_pwm_0: None
   myip_pwm_1: None
   myip_pwm_2: None

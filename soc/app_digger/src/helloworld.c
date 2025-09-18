@@ -12,6 +12,7 @@ typedef unsigned char u8;
 
 #define HC05_UART_DEVICE_ID XPAR_XUARTLITE_0_BASEADDR
 #define USB_UART_BASEADDR   XPAR_XUARTLITE_1_BASEADDR
+#define HANDLE_ADDR         XPAR_MYIP_HANDLE_0_BASEADDR
 
 #define PWM_0_ADDR XPAR_MYIP_PWM_0_BASEADDR
 #define PWM_1_ADDR XPAR_MYIP_PWM_1_BASEADDR  // Y1용 PWM
@@ -24,8 +25,8 @@ typedef unsigned char u8;
 
 #define BUFFER_SIZE   512
 #define LINE_BUFFER_SIZE 256
-#define RANGE_MIN     2100
-#define RANGE_MAX     2200
+#define RANGE_MIN     1500
+#define RANGE_MAX     3000
 
 XUartLite Uart_HC05;
 static int x1_angle = 90;
@@ -43,7 +44,8 @@ uint32_t angle_to_duty(uint32_t angle, uint32_t duty_step);
 void pwm_set(uint32_t base, uint32_t duty, uint32_t pwm_freq, uint32_t duty_step);
 void process_complete_message(const char* message);
 int extract_number_after_key(const char* str, const char* key);
-void control_servo(int value, int* angle, uint32_t pwm_addr, const char* name);  // 새로운 함수
+void control_servo(int value, int* angle, uint32_t pwm_addr, const char* name); 
+void control_move(int y1_val, int y2_val);
 
 // =================== simple UART 함수 ===================
 int simple_uart_send_char(char c) {
@@ -133,14 +135,47 @@ void control_servo(int value, int* angle, uint32_t pwm_addr, const char* name) {
         duty = angle_to_duty(*angle, duty_step);
         pwm_set(pwm_addr, duty, 50, duty_step);
         
-        char angle_buf[32];
-        snprintf(angle_buf, sizeof(angle_buf), "%s Angle increased to: %d\r\n", name, *angle);
-        simple_uart_send_string(angle_buf);
+        // char angle_buf[32];
+        // snprintf(angle_buf, sizeof(angle_buf), "%s Angle increased to: %d\r\n", name, *angle);
+        // simple_uart_send_string(angle_buf);
     }
 }
 
+// =================== 무브 제어 함수 ===================
+void control_move(int y1_val, int y2_val)
+{
+    volatile unsigned int *handle_instance = (volatile unsigned int*)HANDLE_ADDR;
+
+    // [1] 중간값이면 항상 Stop
+    if ((y1_val >= RANGE_MIN && y1_val <= RANGE_MAX) &&
+        (y2_val >= RANGE_MIN && y2_val <= RANGE_MAX)) {
+        handle_instance[0] = 0; // Stop (정지)
+    }
+    // [2] 전진
+    else if((y1_val > RANGE_MAX) && (y2_val > RANGE_MAX)) {
+        handle_instance[0] = 1;  // Forward
+    }
+    // [3] 후진
+    else if((y1_val < RANGE_MIN && y1_val > 0) && (y2_val < RANGE_MIN && y2_val > 0)) {
+        handle_instance[0] = 2;  // Backward
+    }
+    // [4] 좌회전
+    else if((y1_val < RANGE_MIN && y1_val > 0) && (y2_val > RANGE_MAX)) {
+        handle_instance[0] = 4;  // Left
+    }
+    // [5] 우회전
+    else if((y1_val > RANGE_MAX) && (y2_val < RANGE_MIN && y2_val > 0)) {
+        handle_instance[0] = 8;  // Right
+    }
+    else {
+        handle_instance[0] = 0;  // Stop
+    }
+}
+
+
 void servoHandler(int mode, int x1, int y1, int x2, int y2)
 {
+    
     if(mode == 1)
     {
         // 모든 서보를 동일한 로직으로 제어
@@ -149,7 +184,11 @@ void servoHandler(int mode, int x1, int y1, int x2, int y2)
         control_servo(x2, &x2_angle, PWM_2_ADDR, "X2");
         control_servo(y2, &y2_angle, PWM_3_ADDR, "Y2");
     }
-    else if(mode == -1) {
+    else if(mode == 2)
+    {
+        control_move(y1, y2);
+    }
+    else {
         simple_uart_send_string("Mode -1: No servo control\r\n");
     }
 }
@@ -217,20 +256,20 @@ int main(void)
                 }
                 
                 // MODE로 시작하는 새로운 메시지 감지
-                if (line_index >= 5 && strncmp(line_buffer + line_index - 5, "MODE=", 5) == 0 && line_index > 5) {
-                    // 이전 메시지 처리
-                    line_buffer[line_index - 5] = '\0';
-                    if (strlen(line_buffer) > 0) {
-                        simple_uart_send_string("Auto-split: ");
-                        simple_uart_send_string(line_buffer);
-                        simple_uart_send_string("\r\n");
-                        process_complete_message(line_buffer);
-                    }
+                // if (line_index >= 5 && strncmp(line_buffer + line_index - 5, "MODE=", 5) == 0 && line_index > 5) {
+                //     // 이전 메시지 처리
+                //     line_buffer[line_index - 5] = '\0';
+                //     if (strlen(line_buffer) > 0) {
+                //         simple_uart_send_string("Auto-split: ");
+                //         simple_uart_send_string(line_buffer);
+                //         simple_uart_send_string("\r\n");
+                //         process_complete_message(line_buffer);
+                //     }
                     
-                    // 새 메시지 시작
-                    strcpy(line_buffer, "MODE=");
-                    line_index = 5;
-                }
+                //     // 새 메시지 시작
+                //     strcpy(line_buffer, "MODE=");
+                //     line_index = 5;
+                // }
             }
             
             // 주기적으로 긴 메시지 처리 (타임아웃 방식)

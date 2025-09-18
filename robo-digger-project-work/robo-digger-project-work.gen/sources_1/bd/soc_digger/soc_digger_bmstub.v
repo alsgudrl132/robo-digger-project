@@ -6,6 +6,8 @@
 
 (* BLOCK_STUB = "true" *)
 module soc_digger (
+  usb_uart_rxd,
+  usb_uart_txd,
   reset,
   sys_clock,
   rx_0,
@@ -20,10 +22,14 @@ module soc_digger (
   pwm_7,
   pwm_8,
   pwm_9,
-  usb_uart_rxd,
-  usb_uart_txd
+  motor_control_0
 );
 
+  (* X_INTERFACE_INFO = "xilinx.com:interface:uart:1.0 usb_uart RxD" *)
+  (* X_INTERFACE_MODE = "master usb_uart" *)
+  input usb_uart_rxd;
+  (* X_INTERFACE_INFO = "xilinx.com:interface:uart:1.0 usb_uart TxD" *)
+  output usb_uart_txd;
   (* X_INTERFACE_INFO = "xilinx.com:signal:reset:1.0 RST.RESET RST" *)
   (* X_INTERFACE_MODE = "slave RST.RESET" *)
   (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME RST.RESET, POLARITY ACTIVE_HIGH, INSERT_VIP 0" *)
@@ -56,11 +62,8 @@ module soc_digger (
   output pwm_8;
   (* X_INTERFACE_IGNORE = "true" *)
   output pwm_9;
-  (* X_INTERFACE_INFO = "xilinx.com:interface:uart:1.0 usb_uart RxD" *)
-  (* X_INTERFACE_MODE = "master usb_uart" *)
-  input usb_uart_rxd;
-  (* X_INTERFACE_INFO = "xilinx.com:interface:uart:1.0 usb_uart TxD" *)
-  output usb_uart_txd;
+  (* X_INTERFACE_IGNORE = "true" *)
+  output [3:0]motor_control_0;
 
   // stub module has no contents
 

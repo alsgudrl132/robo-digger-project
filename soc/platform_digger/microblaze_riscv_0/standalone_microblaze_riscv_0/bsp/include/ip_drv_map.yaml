@@ -7,6 +7,9 @@ axi_usb_uart:
 microblaze_riscv_0_axi_intc:
 - axi_intc
 - intc
+myip_handle_0:
+- myip_handle
+- None
 myip_pwm_0:
 - myip_pwm
 - None

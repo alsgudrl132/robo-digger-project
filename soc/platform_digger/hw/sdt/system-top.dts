@@ -36,7 +36,8 @@
 			      <0x44a60000 &myip_pwm_6 0x44a60000 0x10000>, 
 			      <0x44a70000 &myip_pwm_7 0x44a70000 0x10000>, 
 			      <0x44a80000 &myip_pwm_8 0x44a80000 0x10000>, 
-			      <0x44a90000 &myip_pwm_9 0x44a90000 0x10000>;
+			      <0x44a90000 &myip_pwm_9 0x44a90000 0x10000>, 
+			      <0x44aa0000 &myip_handle_0 0x44aa0000 0x10000>;
 		#ranges-address-cells = <0x1>;
 		#ranges-size-cells = <0x1>;
 	};

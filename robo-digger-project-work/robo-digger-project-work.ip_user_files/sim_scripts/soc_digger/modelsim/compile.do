@@ -49,7 +49,7 @@ vmap lib_pkg_v1_0_4 modelsim_lib/msim/lib_pkg_v1_0_4
 vmap lib_srl_fifo_v1_0_4 modelsim_lib/msim/lib_srl_fifo_v1_0_4
 vmap axi_uartlite_v2_0_37 modelsim_lib/msim/axi_uartlite_v2_0_37
 
-vlog -work xilinx_vip -64 -incr -mfcu  -sv -L axi_vip_v1_1_19 -L smartconnect_v1_0 -L xilinx_vip "+incdir+/tools/Xilinx/Vivado/2024.2/data/xilinx_vip/include" \
+vlog -work xilinx_vip -64 -incr -mfcu  -sv -L smartconnect_v1_0 -L axi_vip_v1_1_19 -L xilinx_vip "+incdir+/tools/Xilinx/Vivado/2024.2/data/xilinx_vip/include" \
 "/tools/Xilinx/Vivado/2024.2/data/xilinx_vip/hdl/axi4stream_vip_axi4streampc.sv" \
 "/tools/Xilinx/Vivado/2024.2/data/xilinx_vip/hdl/axi_vip_axi4pc.sv" \
 "/tools/Xilinx/Vivado/2024.2/data/xilinx_vip/hdl/xil_common_vip_pkg.sv" \
@@ -60,7 +60,7 @@ vlog -work xilinx_vip -64 -incr -mfcu  -sv -L axi_vip_v1_1_19 -L smartconnect_v1
 "/tools/Xilinx/Vivado/2024.2/data/xilinx_vip/hdl/clk_vip_if.sv" \
 "/tools/Xilinx/Vivado/2024.2/data/xilinx_vip/hdl/rst_vip_if.sv" \
 
-vlog -work xpm -64 -incr -mfcu  -sv -L axi_vip_v1_1_19 -L smartconnect_v1_0 -L xilinx_vip "+incdir+../../../../robo-digger-project-work.gen/sources_1/bd/soc_digger/ipshared/3cbc" "+incdir+../../../../robo-digger-project-work.gen/sources_1/bd/soc_digger/ipshared/ec67/hdl" "+incdir+/tools/Xilinx/Vivado/2024.2/data/xilinx_vip/include" \
+vlog -work xpm -64 -incr -mfcu  -sv -L smartconnect_v1_0 -L axi_vip_v1_1_19 -L xilinx_vip "+incdir+../../../../robo-digger-project-work.gen/sources_1/bd/soc_digger/ipshared/3cbc" "+incdir+../../../../robo-digger-project-work.gen/sources_1/bd/soc_digger/ipshared/ec67/hdl" "+incdir+/tools/Xilinx/Vivado/2024.2/data/xilinx_vip/include" \
 "/tools/Xilinx/Vivado/2024.2/data/ip/xpm/xpm_cdc/hdl/xpm_cdc.sv" \
 "/tools/Xilinx/Vivado/2024.2/data/ip/xpm/xpm_memory/hdl/xpm_memory.sv" \
 
@@ -185,6 +185,10 @@ vlog -work xil_defaultlib -64 -incr -mfcu  "+incdir+../../../../robo-digger-proj
 "../../../bd/soc_digger/ip/soc_digger_myip_pwm_0_7/sim/soc_digger_myip_pwm_0_7.v" \
 "../../../bd/soc_digger/ip/soc_digger_myip_pwm_0_8/sim/soc_digger_myip_pwm_0_8.v" \
 "../../../bd/soc_digger/ip/soc_digger_myip_pwm_0_9/sim/soc_digger_myip_pwm_0_9.v" \
+"../../../bd/soc_digger/ipshared/6b62/hdl/myip_handle_slave_lite_v1_0_S00_AXI.v" \
+"../../../bd/soc_digger/ipshared/6b62/src/controller.v" \
+"../../../bd/soc_digger/ipshared/6b62/hdl/myip_handle.v" \
+"../../../bd/soc_digger/ip/soc_digger_myip_handle_0_0/sim/soc_digger_myip_handle_0_0.v" \
 "../../../bd/soc_digger/sim/soc_digger.v" \
 
 vlog -work xil_defaultlib \

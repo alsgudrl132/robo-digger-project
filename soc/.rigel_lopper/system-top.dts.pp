@@ -308,6 +308,17 @@
 			xlnx,bram-awidth = <32>;
 			xlnx,lmb-awidth = <32>;
 		};
+		myip_handle_0: myip_handle@44aa0000 {
+			xlnx,rable = <0>;
+			xlnx,s00-axi-data-width = <32>;
+			compatible = "xlnx,myip-handle-1.0";
+			status = "okay";
+			xlnx,s00-axi-addr-width = <5>;
+			xlnx,ip-name = "myip_handle";
+			xlnx,edk-iptype = "PERIPHERAL";
+			reg = <0x44aa0000 0x10000>;
+			xlnx,name = "myip_handle_0";
+		};
 		myip_pwm_0: myip_pwm@44a00000 {
 			xlnx,rable = <0>;
 			xlnx,s00-axi-data-width = <32>;
@@ -457,7 +468,8 @@
 			      <0x44a60000 &myip_pwm_6 0x44a60000 0x10000>,
 			      <0x44a70000 &myip_pwm_7 0x44a70000 0x10000>,
 			      <0x44a80000 &myip_pwm_8 0x44a80000 0x10000>,
-			      <0x44a90000 &myip_pwm_9 0x44a90000 0x10000>;
+			      <0x44a90000 &myip_pwm_9 0x44a90000 0x10000>,
+			      <0x44aa0000 &myip_handle_0 0x44aa0000 0x10000>;
 		#ranges-address-cells = <0x1>;
 		#ranges-size-cells = <0x1>;
 	};

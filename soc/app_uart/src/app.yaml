@@ -1,4 +1,4 @@
-domain_path: /home/user11/robo-digger-project/soc/platform_uart/export/platform_uart/sw/standalone_microblaze_riscv_0
+domain_path: /home/min/robo-digger-project/soc/platform_uart/export/platform_uart/sw/standalone_microblaze_riscv_0
 app_src_dir: /tools/Xilinx/Vitis/2024.2/data/embeddedsw/lib/sw_apps/hello_world
 template: hello_world
 lang: c
