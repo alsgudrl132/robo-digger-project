@@ -835,28 +835,24 @@ module handle_cntr(
     output reg [3:0] motor_control  // [left_forward, left_backward, right_forward, right_backward]
 );
 
-// 0001: Forward
-// 0010: Backward  
-// 0100: Left
-// 1000: Right
+// command[0]: 왼쪽바퀴 전진
+// command[1]: 왼쪽바퀴 후진  
+// command[2]: 오른쪽바퀴 전진
+// command[3]: 오른쪽바퀴 후진
 
 always @(posedge clk or posedge reset_p) begin
     if (reset_p) begin
-        motor_control <= 4'b0000;  // 모든 모터 정지
+        motor_control <= 4'b0000;
     end
     else begin
-        case (command)
-            4'b0001: motor_control <= 4'b1001;  // Forward: 양쪽 모터 전진 1001
-            4'b0010: motor_control <= 4'b0110;  // Backward: 양쪽 모터 후진 0110
-            4'b0100: motor_control <= 4'b1010;  // Turn Left: 왼쪽 후진, 오른쪽 전진 1010
-            4'b1000: motor_control <= 4'b0101;  // Turn Right: 왼쪽 전진, 오른쪽 후진 0101
-            default: motor_control <= 4'b0000;  // Stop: 모든 모터 정지
-        endcase
+        motor_control[3] <= command[0];  // 왼쪽바퀴 전진
+        motor_control[2] <= command[1];  // 왼쪽바퀴 후진
+        motor_control[1] <= command[2];  // 오른쪽바퀴 전진
+        motor_control[0] <= command[3];  // 오른쪽바퀴 후진
     end
 end
 
 endmodule
-
 
 
 
