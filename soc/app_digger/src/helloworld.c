@@ -26,8 +26,8 @@ typedef unsigned char u8;
 
 #define BUFFER_SIZE       512
 #define LINE_BUFFER_SIZE  256
-#define RANGE_MIN         1500
-#define RANGE_MAX         3000
+#define RANGE_MIN         1700
+#define RANGE_MAX         2400
 
 XUartLite Uart_HC05;
 static int x1_angle = 90;
@@ -98,25 +98,38 @@ void process_line(const char* line) {
     int x2   = extract_number_after_key(line, "X2=");
     int y2   = extract_number_after_key(line, "Y2=");
 
-    // 값이 정상인지 확인
     if (mode == -999 || (x1 == -999 && y1 == -999 && x2 == -999 && y2 == -999)) {
-        // 완전히 깨진 라인 → 무시
-        return;
+        return; // 깨진 라인
     }
 
-    // 이전 값 보존
-    if (x1 == -999) x1 = last_x1;
-    else last_x1 = x1;
-    if (y1 == -999) y1 = last_y1;
-    else last_y1 = y1;
-    if (x2 == -999) x2 = last_x2;
-    else last_x2 = x2;
-    if (y2 == -999) y2 = last_y2;
-    else last_y2 = y2;
+    if (x1 == -999) x1 = last_x1; else last_x1 = x1;
+    if (y1 == -999) y1 = last_y1; else last_y1 = y1;
+    if (x2 == -999) x2 = last_x2; else last_x2 = x2;
+    if (y2 == -999) y2 = last_y2; else last_y2 = y2;
 
-    // 서보 제어
+    // Work Mode: 조이스틱이 모두 중립이면 제어 스킵
+    if (mode == 1) {
+        if ((x1 >= RANGE_MIN && x1 <= RANGE_MAX) &&
+            (y1 >= RANGE_MIN && y1 <= RANGE_MAX) &&
+            (x2 >= RANGE_MIN && x2 <= RANGE_MAX) &&
+            (y2 >= RANGE_MIN && y2 <= RANGE_MAX)) {
+            simple_uart_send_string("[INFO] All joysticks neutral, skipping servo control\r\n");
+            return;
+        }
+    }
+
+    // Drive Mode: 두 조이스틱 모두 중립이면 이동 제어 스킵
+    if (mode == 2) {
+        if ((y1 >= RANGE_MIN && y1 <= RANGE_MAX) &&
+            (y2 >= RANGE_MIN && y2 <= RANGE_MAX)) {
+            simple_uart_send_string("[INFO] Joysticks neutral, skipping movement\r\n");
+            return;
+        }
+    }
+
     servoHandler(mode, x1, y1, x2, y2);
 }
+
 
 
 // =================== 서보 제어 함수 ===================
@@ -129,13 +142,14 @@ void control_servo(int value, int* angle, uint32_t pwm_addr, const char* name) {
     snprintf(debug_msg, sizeof(debug_msg), "%s: value=%d, current_angle=%d\r\n", 
              name, value, *angle);
     simple_uart_send_string(debug_msg);
-    
-    // 더 좁은 데드존 적용 (중립값 2048 기준 ±300)
-    int neutral_min = 1748;  // 2048 - 300
-    int neutral_max = 2348;  // 2048 + 300
+
+    if (value >= RANGE_MIN && value <= RANGE_MAX) {
+        *angle = *angle; // 각도 그대로
+        return; // PWM 갱신 금지
+    }
     
     // 데드존 확인
-    if (value >= neutral_min && value <= neutral_max) {
+    if (value >= RANGE_MIN && value <= RANGE_MAX) {
         char neutral_msg[48];
         snprintf(neutral_msg, sizeof(neutral_msg), "%s in neutral zone (value=%d)\r\n", name, value);
         simple_uart_send_string(neutral_msg);
@@ -143,8 +157,8 @@ void control_servo(int value, int* angle, uint32_t pwm_addr, const char* name) {
     }
     
     // 더 넓은 움직임 범위
-    if (value < neutral_min && value > 0) {
-        *angle -= 6;
+    if (value < RANGE_MIN && value > 0) {
+        *angle -= 2;
         if (*angle < 0) *angle = 0;  // 0도 제한
         
         char move_msg[48];
@@ -152,8 +166,8 @@ void control_servo(int value, int* angle, uint32_t pwm_addr, const char* name) {
                  name, old_angle, *angle, value);
         simple_uart_send_string(move_msg);
     }
-    else if (value > neutral_max || value == 4095) {  // 최대값일 때도 처리
-        *angle += 6;  
+    else if (value > RANGE_MAX || value == 4095) {  // 최대값일 때도 처리
+        *angle += 2;  
         if (*angle > 180) *angle = 180;  // 180도 제한
         
         char move_msg[48];
@@ -291,26 +305,26 @@ int main(void) {
              PWM_0_ADDR, PWM_1_ADDR, PWM_2_ADDR, PWM_3_ADDR);
     simple_uart_send_string(addr_info);
     
-    // 서보 테스트 (각 서보를 45도씩 움직여서 동작 확인)
-    simple_uart_send_string("Testing servo movement...\r\n");
+    // // 서보 테스트 (각 서보를 45도씩 움직여서 동작 확인)
+    // simple_uart_send_string("Testing servo movement...\r\n");
     
-    // X1 테스트
-    x1_angle = 45;
-    uint32_t test_duty = angle_to_duty(45, 4095);
-    pwm_set(PWM_0_ADDR, test_duty, 50, 4095);
-    simple_uart_send_string("X1 moved to 45 degrees\r\n");
-    usleep(500000); // 0.5초 대기
+    // // X1 테스트
+    // x1_angle = 45;
+    // uint32_t test_duty = angle_to_duty(45, 4095);
+    // pwm_set(PWM_0_ADDR, test_duty, 50, 4095);
+    // simple_uart_send_string("X1 moved to 45 degrees\r\n");
+    // usleep(500000); // 0.5초 대기
     
-    x1_angle = 135;
-    test_duty = angle_to_duty(135, 4095);
-    pwm_set(PWM_0_ADDR, test_duty, 50, 4095);
-    simple_uart_send_string("X1 moved to 135 degrees\r\n");
-    usleep(500000);
+    // x1_angle = 135;
+    // test_duty = angle_to_duty(135, 4095);
+    // pwm_set(PWM_0_ADDR, test_duty, 50, 4095);
+    // simple_uart_send_string("X1 moved to 135 degrees\r\n");
+    // usleep(500000);
     
-    x1_angle = 90;
-    test_duty = angle_to_duty(90, 4095);
-    pwm_set(PWM_0_ADDR, test_duty, 50, 4095);
-    simple_uart_send_string("X1 back to 90 degrees\r\n");
+    // x1_angle = 90;
+    // test_duty = angle_to_duty(90, 4095);
+    // pwm_set(PWM_0_ADDR, test_duty, 50, 4095);
+    // simple_uart_send_string("X1 back to 90 degrees\r\n");
     
     simple_uart_send_string("Servo test completed. Ready for control.\r\n");
 
