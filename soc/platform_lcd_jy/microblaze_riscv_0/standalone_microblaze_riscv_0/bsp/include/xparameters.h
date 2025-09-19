@@ -1,0 +1,134 @@
+#ifndef XPARAMETERS_H   /* prevent circular inclusions */
+#define XPARAMETERS_H   /* by using protection macros */
+
+#define XPAR_XIIC_NUM_INSTANCES 1
+
+/* Definitions for peripheral AXI_IIC_0 */
+#define XPAR_AXI_IIC_0_COMPATIBLE "xlnx,axi-iic-2.1"
+#define XPAR_AXI_IIC_0_BASEADDR 0x40800000
+#define XPAR_AXI_IIC_0_HIGHADDR 0x4080ffff
+#define XPAR_AXI_IIC_0_TEN_BIT_ADR 0x0
+#define XPAR_AXI_IIC_0_GPO_WIDTH 0x1
+
+/* Canonical definitions for peripheral AXI_IIC_0 */
+#define XPAR_XIIC_0_BASEADDR 0x40800000
+#define XPAR_XIIC_0_HIGHADDR 0x4080ffff
+#define XPAR_XIIC_0_COMPATIBLE "xlnx,axi-iic-2.1"
+#define XPAR_XIIC_0_GPO_WIDTH 0x1
+#define XPAR_XIIC_0_TEN_BIT_ADR 0x0
+
+#define XPAR_XUARTLITE_NUM_INSTANCES 2
+
+/* Definitions for peripheral AXI_UARTLITE_0 */
+#define XPAR_AXI_UARTLITE_0_COMPATIBLE "xlnx,axi-uartlite-2.0"
+#define XPAR_AXI_UARTLITE_0_BASEADDR 0x40600000
+#define XPAR_AXI_UARTLITE_0_HIGHADDR 0x4060ffff
+#define XPAR_AXI_UARTLITE_0_BAUDRATE 0x9600
+#define XPAR_AXI_UARTLITE_0_USE_PARITY 0x0
+#define XPAR_AXI_UARTLITE_0_ODD_PARITY 0x0
+#define XPAR_AXI_UARTLITE_0_DATA_BITS 0x8
+
+/* Canonical definitions for peripheral AXI_UARTLITE_0 */
+#define XPAR_XUARTLITE_0_BASEADDR 0x40600000
+#define XPAR_XUARTLITE_0_HIGHADDR 0x4060ffff
+#define XPAR_XUARTLITE_0_BAUDRATE 0x9600
+#define XPAR_XUARTLITE_0_COMPATIBLE "xlnx,axi-uartlite-2.0"
+#define XPAR_XUARTLITE_0_DATA_BITS 0x8
+#define XPAR_XUARTLITE_0_ODD_PARITY 0x0
+#define XPAR_XUARTLITE_0_USE_PARITY 0x0
+
+/* Definitions for peripheral AXI_UARTLITE_1 */
+#define XPAR_AXI_UARTLITE_1_COMPATIBLE "xlnx,axi-uartlite-2.0"
+#define XPAR_AXI_UARTLITE_1_BASEADDR 0x40610000
+#define XPAR_AXI_UARTLITE_1_HIGHADDR 0x4061ffff
+#define XPAR_AXI_UARTLITE_1_BAUDRATE 0x9600
+#define XPAR_AXI_UARTLITE_1_USE_PARITY 0x0
+#define XPAR_AXI_UARTLITE_1_ODD_PARITY 0x0
+#define XPAR_AXI_UARTLITE_1_DATA_BITS 0x8
+
+/* Canonical definitions for peripheral AXI_UARTLITE_1 */
+#define XPAR_XUARTLITE_1_BASEADDR 0x40610000
+#define XPAR_XUARTLITE_1_HIGHADDR 0x4061ffff
+#define XPAR_XUARTLITE_1_BAUDRATE 0x9600
+#define XPAR_XUARTLITE_1_COMPATIBLE "xlnx,axi-uartlite-2.0"
+#define XPAR_XUARTLITE_1_DATA_BITS 0x8
+#define XPAR_XUARTLITE_1_ODD_PARITY 0x0
+#define XPAR_XUARTLITE_1_USE_PARITY 0x0
+
+/* Definitions for peripheral MYIP_ADC_NEW_0 */
+#define XPAR_MYIP_ADC_NEW_0_BASEADDR 0x44a30000
+#define XPAR_MYIP_ADC_NEW_0_HIGHADDR 0x44a3ffff
+
+/* Canonical definitions for peripheral MYIP_ADC_NEW_0 */
+#define XPAR_MYIP_ADC_NEW_0_BASEADDR 0x44a30000
+#define XPAR_MYIP_ADC_NEW_0_HIGHADDR 0x44a3ffff
+
+/* Definitions for peripheral MYIP_BTN_0 */
+#define XPAR_MYIP_BTN_0_BASEADDR 0x44a40000
+#define XPAR_MYIP_BTN_0_HIGHADDR 0x44a4ffff
+
+/* Canonical definitions for peripheral MYIP_BTN_0 */
+#define XPAR_MYIP_BTN_0_BASEADDR 0x44a40000
+#define XPAR_MYIP_BTN_0_HIGHADDR 0x44a4ffff
+
+/* Definitions for peripheral MYIP_BTN_1 */
+#define XPAR_MYIP_BTN_1_BASEADDR 0x44a50000
+#define XPAR_MYIP_BTN_1_HIGHADDR 0x44a5ffff
+
+/* Canonical definitions for peripheral MYIP_BTN_1 */
+#define XPAR_MYIP_BTN_1_BASEADDR 0x44a50000
+#define XPAR_MYIP_BTN_1_HIGHADDR 0x44a5ffff
+
+/* Definitions for peripheral MYIP_PWM_0 */
+#define XPAR_MYIP_PWM_0_BASEADDR 0x44a00000
+#define XPAR_MYIP_PWM_0_HIGHADDR 0x44a0ffff
+
+/* Canonical definitions for peripheral MYIP_PWM_0 */
+#define XPAR_MYIP_PWM_0_BASEADDR 0x44a00000
+#define XPAR_MYIP_PWM_0_HIGHADDR 0x44a0ffff
+
+/* Definitions for peripheral MYIP_PWM_1_0 */
+#define XPAR_MYIP_PWM_1_0_BASEADDR 0x44a10000
+#define XPAR_MYIP_PWM_1_0_HIGHADDR 0x44a1ffff
+
+/* Canonical definitions for peripheral MYIP_PWM_1_0 */
+#define XPAR_MYIP_PWM_1_0_BASEADDR 0x44a10000
+#define XPAR_MYIP_PWM_1_0_HIGHADDR 0x44a1ffff
+
+/* Definitions for peripheral MYIP_PWM_2_0 */
+#define XPAR_MYIP_PWM_2_0_BASEADDR 0x44a20000
+#define XPAR_MYIP_PWM_2_0_HIGHADDR 0x44a2ffff
+
+/* Canonical definitions for peripheral MYIP_PWM_2_0 */
+#define XPAR_MYIP_PWM_2_0_BASEADDR 0x44a20000
+#define XPAR_MYIP_PWM_2_0_HIGHADDR 0x44a2ffff
+
+/*  BOARD definition */
+#define XPS_BOARD_BASYS3
+
+#define XPAR_LMB_BRAM_0_BASEADDRESS 0x0
+#define XPAR_LMB_BRAM_0_HIGHADDRESS 0x1ffff
+
+/*  CPU parameters definition */
+#define XPAR_CPU_CORE_CLOCK_FREQ_HZ 100000000
+#define XPAR_MICROBLAZE_RISCV_USE_DCACHE 0
+#define XPAR_MICROBLAZE_RISCV_DCACHE_LINE_LEN 4
+#define XPAR_MICROBLAZE_RISCV_DCACHE_BYTE_SIZE 4096
+#define XPAR_MICROBLAZE_RISCV_USE_ICACHE 0
+#define XPAR_MICROBLAZE_RISCV_ICACHE_LINE_LEN 4
+#define XPAR_MICROBLAZE_RISCV_ICACHE_BYTE_SIZE 4096
+#define XPAR_MICROBLAZE_RISCV_USE_FPU 0
+#define XPAR_MICROBLAZE_RISCV_USE_MMU 0
+#define XPAR_MICROBLAZE_RISCV_USE_SLEEP 0
+#define XPAR_MICROBLAZE_RISCV_FAULT_TOLERANT 0
+#define XPAR_MICROBLAZE_RISCV_D_LMB 1
+#define XPAR_MICROBLAZE_RISCV_USE_BRANCH_TARGET_CACHE 0
+#define XPAR_MICROBLAZE_RISCV_BRANCH_TARGET_CACHE_SIZE 0
+
+/* Number of SLRs */
+#define NUMBER_OF_SLRS 0x1
+
+/* Device ID */
+#define XPAR_DEVICE_ID "7a35t"
+
+#endif  /* end of protection macro */

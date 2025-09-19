@@ -196,10 +196,10 @@ int main() {
     }
     
     // ADC 보정 상수
-    const uint32_t RAW_MIN[4] = {8, 8, 7, 7};
+    const uint32_t RAW_MIN[4] = {10, 10, 10, 10};
     const uint32_t RAW_MAX[4] = {3000, 3000, 3000, 3000};
     const uint32_t NEUTRAL[4] = {2048, 2048, 2048, 2048};
-    const uint32_t DEADZONE = 200;
+    const uint32_t DEADZONE = 300;
     
     u32 adc_raw[4];
     int idle_counter = 0;
