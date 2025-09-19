@@ -1,4 +1,4 @@
-# 2025-09-19T15:00:27.128503
+# 2025-09-19T13:34:09.665114
 import vitis
 
 client = vitis.create_client()
@@ -10,10 +10,34 @@ status = platform.build()
 comp = client.get_component(name="app_digger")
 comp.build()
 
+status = platform.build()
+
+comp.build()
+
+status = platform.build()
+
+comp.build()
+
+status = platform.build()
+
+comp.build()
+
+status = platform.build()
+
+comp.build()
+
+status = platform.build()
+
+comp.build()
+
 platform = client.get_component(name="platform_uart")
 status = platform.build()
 
 comp = client.get_component(name="app_uart")
+comp.build()
+
+status = platform.build()
+
 comp.build()
 
 platform = client.get_component(name="platform_digger")
@@ -73,4 +97,18 @@ comp.build()
 status = platform.build()
 
 comp.build()
+
+status = platform.build()
+
+comp.build()
+
+status = platform.build()
+
+comp.build()
+
+status = platform.build()
+
+comp.build()
+
+vitis.dispose()
 
