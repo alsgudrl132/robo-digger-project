@@ -11,8 +11,13 @@
 #define PWM_1_ADDR XPAR_MYIP_PWM_1_BASEADDR  // Y1용
 #define PWM_2_ADDR XPAR_MYIP_PWM_2_BASEADDR  // X2용  
 #define PWM_3_ADDR XPAR_MYIP_PWM_3_BASEADDR  // Y2용
+#define PWM_4_ADDR XPAR_MYIP_PWM_4_BASEADDR  // 블레이드
+#define PWM_5_ADDR XPAR_MYIP_PWM_5_BASEADDR  // 왼쪽바퀴
+#define PWM_6_ADDR XPAR_MYIP_PWM_6_BASEADDR  // 오른쪽바퀴
+
+
 #define SYS_CLK_FREQ  100000000  
-#define REG_DUTY      0x0
+#define REG_DUTY      0x0                   
 #define REG_TEMP      0x4
 #define REG_DUTYSTEP  0x8
 #define BUFFER_SIZE       512
@@ -124,11 +129,11 @@ void move_wheels(int y1_val, int y2_val) {
         y2_val >= RANGE_MIN && y2_val <= RANGE_MAX) {
         cmd = 0; // 정지
     } else {
-        if (y1_val > RANGE_MAX) cmd |= 0x01;      // 왼쪽 전진
-        else if (y1_val < RANGE_MIN) cmd |= 0x02; // 왼쪽 후진
+        if (y1_val > RANGE_MAX) cmd |= 0x08;      // 왼쪽 전진
+        else if (y1_val < RANGE_MIN) cmd |= 0x04; // 왼쪽 후진
         
-        if (y2_val > RANGE_MAX) cmd |= 0x04;      // 오른쪽 전진
-        else if (y2_val < RANGE_MIN) cmd |= 0x08; // 오른쪽 후진
+        if (y2_val > RANGE_MAX) cmd |= 0x01;      // 오른쪽 전진
+        else if (y2_val < RANGE_MIN) cmd |= 0x02; // 오른쪽 후진
     }
     
     handle[0] = cmd;
