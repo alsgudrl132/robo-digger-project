@@ -4,6 +4,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+
 #define HC05_UART_DEVICE_ID XPAR_XUARTLITE_0_BASEADDR
 #define USB_UART_BASEADDR   XPAR_XUARTLITE_1_BASEADDR
 #define HANDLE_ADDR         XPAR_MYIP_HANDLE_0_BASEADDR
@@ -15,15 +16,15 @@
 #define PWM_5_ADDR XPAR_MYIP_PWM_5_BASEADDR  // 왼쪽바퀴
 #define PWM_6_ADDR XPAR_MYIP_PWM_6_BASEADDR  // 오른쪽바퀴
 
-
 #define SYS_CLK_FREQ  100000000  
 #define REG_DUTY      0x0                   
 #define REG_TEMP      0x4
 #define REG_DUTYSTEP  0x8
 #define BUFFER_SIZE       512
 #define LINE_BUFFER_SIZE  128
-#define RANGE_MIN         1100
-#define RANGE_MAX         3000
+#define RANGE_MIN         1500  // 더 큰 데드존
+#define RANGE_MAX         2600  // 더 큰 데드존
+#define MAX_SPEED_CHANGE  10
 
 XUartLite Uart_HC05;
 
@@ -36,6 +37,27 @@ static int line_index = 0;
 
 // 마지막 값들 (fallback용)
 static int last_x1 = 2048, last_y1 = 2048, last_x2 = 2048, last_y2 = 2048;
+
+// 바퀴 속도값 
+static int current_left_speed = 0;
+static int current_right_speed = 0;
+
+// 함수 프로토타입 선언
+void uart_send_string(const char *str);
+int get_number_improved(const char* str, const char* key);
+int get_button_value(const char* str);
+int is_neutral_command(const char* str);
+void move_servo(int *angle, int value, uint32_t pwm_addr, int direction);
+void move_servo_smooth_x1(int joystick_val);
+void move_servo_smooth_y1(int joystick_val);
+void move_servo_smooth_x2(int joystick_val);
+void move_servo_smooth_y2(int joystick_val);
+void set_motor_speed(uint32_t pwm_addr, int speed_percent);
+void move_wheels_with_speed(int y1_val, int y2_val);
+void move_wheels_smooth(int y1_val, int y2_val);
+void force_stop_motors(void);
+void process_data(const char* line);
+void emergency_stop(void);
 
 // =================== 간단한 UART 함수 ===================
 void uart_send_string(const char *str) {
@@ -98,7 +120,155 @@ int is_neutral_command(const char* str) {
     return (strstr(str, "NEUTRAL=1") != NULL);
 }
 
-// =================== 간단한 서보 제어 ===================
+// =================== DC모터 PWM 속도 설정 함수 ===================
+void set_motor_speed(uint32_t pwm_addr, int speed_percent) {
+    if (speed_percent < 0) speed_percent = 0;
+    if (speed_percent > 100) speed_percent = 100;
+    
+    // DC모터용 PWM 설정 (주파수: 1kHz)
+    uint32_t duty = (4095 * speed_percent) / 100;  // 0~4095 범위
+    uint32_t temp = SYS_CLK_FREQ / 1000 / 4095 / 2; // 1kHz 주파수
+    
+    Xil_Out32(pwm_addr + REG_DUTY, duty);
+    Xil_Out32(pwm_addr + REG_TEMP, temp);
+    Xil_Out32(pwm_addr + REG_DUTYSTEP, 4095);
+}
+
+// =================== 개별 서보 스무스 제어 함수들 ===================
+void move_servo_smooth_x1(int joystick_val) {
+    static int target_angle = 90;
+    
+    // 조이스틱 값에 따른 목표 각도 계산 (0~180도)
+    if (joystick_val < RANGE_MIN) {
+        target_angle = 90 + (RANGE_MIN - joystick_val) * 90 / RANGE_MIN;
+    } else if (joystick_val > RANGE_MAX) {
+        target_angle = 90 - (joystick_val - RANGE_MAX) * 90 / (4095 - RANGE_MAX);
+    } else {
+        target_angle = 90; // 중립
+    }
+    
+    // 각도 제한
+    if (target_angle < 0) target_angle = 0;
+    if (target_angle > 180) target_angle = 180;
+    
+    // 부드러운 각도 변화 (한 번에 최대 2도)
+    if (x1_angle < target_angle) {
+        x1_angle += 1;
+        if (x1_angle > target_angle) x1_angle = target_angle;
+    } else if (x1_angle > target_angle) {
+        x1_angle -= 1;
+        if (x1_angle < target_angle) x1_angle = target_angle;
+    }
+    
+    // PWM 출력
+    uint32_t duty_min = 4095 * 5 / 200;
+    uint32_t duty_max = 4095 * 25 / 200;
+    uint32_t duty = duty_min + ((duty_max - duty_min) * x1_angle) / 180;
+    uint32_t temp = SYS_CLK_FREQ / 50 / 4095 / 2;
+    
+    Xil_Out32(PWM_0_ADDR + REG_DUTY, duty);
+    Xil_Out32(PWM_0_ADDR + REG_TEMP, temp);
+    Xil_Out32(PWM_0_ADDR + REG_DUTYSTEP, 4095);
+}
+
+void move_servo_smooth_y1(int joystick_val) {
+    static int target_angle = 90;
+    
+    if (joystick_val < RANGE_MIN) {
+        target_angle = 90 + (RANGE_MIN - joystick_val) * 90 / RANGE_MIN;
+    } else if (joystick_val > RANGE_MAX) {
+        target_angle = 90 - (joystick_val - RANGE_MAX) * 90 / (4095 - RANGE_MAX);
+    } else {
+        target_angle = 90;
+    }
+    
+    if (target_angle < 0) target_angle = 0;
+    if (target_angle > 180) target_angle = 180;
+    
+    if (y1_angle < target_angle) {
+        y1_angle += 1;
+        if (y1_angle > target_angle) y1_angle = target_angle;
+    } else if (y1_angle > target_angle) {
+        y1_angle -= 1;
+        if (y1_angle < target_angle) y1_angle = target_angle;
+    }
+    
+    uint32_t duty_min = 4095 * 5 / 200;
+    uint32_t duty_max = 4095 * 25 / 200;
+    uint32_t duty = duty_min + ((duty_max - duty_min) * y1_angle) / 180;
+    uint32_t temp = SYS_CLK_FREQ / 50 / 4095 / 2;
+    
+    Xil_Out32(PWM_1_ADDR + REG_DUTY, duty);
+    Xil_Out32(PWM_1_ADDR + REG_TEMP, temp);
+    Xil_Out32(PWM_1_ADDR + REG_DUTYSTEP, 4095);
+}
+
+void move_servo_smooth_x2(int joystick_val) {
+    static int target_angle = 90;
+    
+    // X2는 역방향
+    if (joystick_val < RANGE_MIN) {
+        target_angle = 90 - (RANGE_MIN - joystick_val) * 90 / RANGE_MIN;
+    } else if (joystick_val > RANGE_MAX) {
+        target_angle = 90 + (joystick_val - RANGE_MAX) * 90 / (4095 - RANGE_MAX);
+    } else {
+        target_angle = 90;
+    }
+    
+    if (target_angle < 0) target_angle = 0;
+    if (target_angle > 180) target_angle = 180;
+    
+    if (x2_angle < target_angle) {
+        x2_angle += 1;
+        if (x2_angle > target_angle) x2_angle = target_angle;
+    } else if (x2_angle > target_angle) {
+        x2_angle -= 1;
+        if (x2_angle < target_angle) x2_angle = target_angle;
+    }
+    
+    uint32_t duty_min = 4095 * 5 / 200;
+    uint32_t duty_max = 4095 * 25 / 200;
+    uint32_t duty = duty_min + ((duty_max - duty_min) * x2_angle) / 180;
+    uint32_t temp = SYS_CLK_FREQ / 50 / 4095 / 2;
+    
+    Xil_Out32(PWM_2_ADDR + REG_DUTY, duty);
+    Xil_Out32(PWM_2_ADDR + REG_TEMP, temp);
+    Xil_Out32(PWM_2_ADDR + REG_DUTYSTEP, 4095);
+}
+
+void move_servo_smooth_y2(int joystick_val) {
+    static int target_angle = 90;
+    
+    if (joystick_val < RANGE_MIN) {
+        target_angle = 90 + (RANGE_MIN - joystick_val) * 90 / RANGE_MIN;
+    } else if (joystick_val > RANGE_MAX) {
+        target_angle = 90 - (joystick_val - RANGE_MAX) * 90 / (4095 - RANGE_MAX);
+    } else {
+        target_angle = 90;
+    }
+    
+    if (target_angle < 0) target_angle = 0;
+    if (target_angle > 180) target_angle = 180;
+    
+    if (y2_angle < target_angle) {
+        y2_angle += 1;
+        if (y2_angle > target_angle) y2_angle = target_angle;
+    } else if (y2_angle > target_angle) {
+        y2_angle -= 1;
+        if (y2_angle < target_angle) y2_angle = target_angle;
+    }
+    
+    uint32_t duty_min = 4095 * 5 / 200;
+    uint32_t duty_max = 4095 * 25 / 200;
+    uint32_t duty = duty_min + ((duty_max - duty_min) * y2_angle) / 180;
+    uint32_t temp = SYS_CLK_FREQ / 50 / 4095 / 2;
+    
+    Xil_Out32(PWM_3_ADDR + REG_DUTY, duty);
+    Xil_Out32(PWM_3_ADDR + REG_TEMP, temp);
+    Xil_Out32(PWM_3_ADDR + REG_DUTYSTEP, 4095);
+}
+
+// =================== 간단한 서보 제어 (기존 - 사용 안함) ===================
 void move_servo(int *angle, int value, uint32_t pwm_addr, int direction) {
     int old_angle = *angle;
     
@@ -120,23 +290,149 @@ void move_servo(int *angle, int value, uint32_t pwm_addr, int direction) {
     }
 }
 
-// =================== 간단한 이동 제어 ===================
-void move_wheels(int y1_val, int y2_val) {
+// =================== DC모터 즉시 속도 제어 ===================
+void move_wheels_with_speed(int y1_val, int y2_val) {
     volatile unsigned int *handle = (volatile unsigned int*)HANDLE_ADDR;
     int cmd = 0;
     
+    // 속도 계산 (0~100%)
+    int left_speed = 0;   // 왼쪽 모터 속도
+    int right_speed = 0;  // 오른쪽 모터 속도
+    
+    // 중립 범위 체크
     if (y1_val >= RANGE_MIN && y1_val <= RANGE_MAX && 
         y2_val >= RANGE_MIN && y2_val <= RANGE_MAX) {
         cmd = 0; // 정지
+        left_speed = 0;
+        right_speed = 0;
     } else {
-        if (y1_val > RANGE_MAX) cmd |= 0x08;      // 왼쪽 전진
-        else if (y1_val < RANGE_MIN) cmd |= 0x04; // 왼쪽 후진
+        // 왼쪽 모터 제어 (Y1)
+        if (y1_val > RANGE_MAX) {
+            cmd |= 0x08;  // 왼쪽 전진
+            left_speed = (y1_val - RANGE_MAX) * 100 / (4095 - RANGE_MAX);
+        } else if (y1_val < RANGE_MIN) {
+            cmd |= 0x04;  // 왼쪽 후진
+            left_speed = (RANGE_MIN - y1_val) * 100 / RANGE_MIN;
+        }
         
-        if (y2_val > RANGE_MAX) cmd |= 0x01;      // 오른쪽 전진
-        else if (y2_val < RANGE_MIN) cmd |= 0x02; // 오른쪽 후진
+        // 오른쪽 모터 제어 (Y2)
+        if (y2_val > RANGE_MAX) {
+            cmd |= 0x01;  // 오른쪽 전진
+            right_speed = (y2_val - RANGE_MAX) * 100 / (4095 - RANGE_MAX);
+        } else if (y2_val < RANGE_MIN) {
+            cmd |= 0x02;  // 오른쪽 후진
+            right_speed = (RANGE_MIN - y2_val) * 100 / RANGE_MIN;
+        }
+        
+        // 속도 제한 (0~100)
+        if (left_speed > 100) left_speed = 100;
+        if (right_speed > 100) right_speed = 100;
     }
     
+    // 방향 제어 (기존 방식)
     handle[0] = cmd;
+    
+    // PWM 속도 제어 추가
+    set_motor_speed(PWM_5_ADDR, left_speed);   // 왼쪽 바퀴
+    set_motor_speed(PWM_6_ADDR, right_speed);  // 오른쪽 바퀴
+    
+    // 디버그 출력 제거
+}
+
+// =================== 강제 정지 기능 추가 ===================
+void force_stop_motors(void) {
+    volatile unsigned int *handle = (volatile unsigned int*)HANDLE_ADDR;
+    handle[0] = 0;
+    set_motor_speed(PWM_5_ADDR, 0);
+    set_motor_speed(PWM_6_ADDR, 0);
+    current_left_speed = 0;
+    current_right_speed = 0;
+}
+
+// =================== DC모터 부드러운 속도 제어 (개선됨) ===================
+void move_wheels_smooth(int y1_val, int y2_val) {
+    volatile unsigned int *handle = (volatile unsigned int*)HANDLE_ADDR;
+    int cmd = 0;
+    int target_left_speed = 0;
+    int target_right_speed = 0;
+    
+    // 목표 속도 계산 (더 큰 데드존 적용)
+    if (y1_val >= RANGE_MIN && y1_val <= RANGE_MAX && 
+        y2_val >= RANGE_MIN && y2_val <= RANGE_MAX) {
+        cmd = 0;
+        target_left_speed = 0;
+        target_right_speed = 0;
+    } else {
+        // 왼쪽 모터 (더 민감한 제어)
+        if (y1_val > RANGE_MAX) {
+            cmd |= 0x08;
+            target_left_speed = (y1_val - RANGE_MAX) * 100 / (4095 - RANGE_MAX);
+        } else if (y1_val < RANGE_MIN) {
+            cmd |= 0x04;
+            target_left_speed = (RANGE_MIN - y1_val) * 100 / RANGE_MIN;
+        }
+        
+        // 오른쪽 모터 (더 민감한 제어)
+        if (y2_val > RANGE_MAX) {
+            cmd |= 0x01;
+            target_right_speed = (y2_val - RANGE_MAX) * 100 / (4095 - RANGE_MAX);
+        } else if (y2_val < RANGE_MIN) {
+            cmd |= 0x02;
+            target_right_speed = (RANGE_MIN - y2_val) * 100 / RANGE_MIN;
+        }
+        
+        if (target_left_speed > 100) target_left_speed = 100;
+        if (target_right_speed > 100) target_right_speed = 100;
+    }
+    
+    // 부드러운 가속/감속 (더 빠른 감속)
+    if (target_left_speed == 0 && target_right_speed == 0) {
+        // 중립일 때는 더 빠르게 정지
+        current_left_speed = 0;
+        current_right_speed = 0;
+    } else {
+        // 일반적인 부드러운 제어
+        if (current_left_speed < target_left_speed) {
+            current_left_speed += MAX_SPEED_CHANGE;
+            if (current_left_speed > target_left_speed) 
+                current_left_speed = target_left_speed;
+        } else if (current_left_speed > target_left_speed) {
+            current_left_speed -= MAX_SPEED_CHANGE;
+            if (current_left_speed < target_left_speed) 
+                current_left_speed = target_left_speed;
+        }
+        
+        if (current_right_speed < target_right_speed) {
+            current_right_speed += MAX_SPEED_CHANGE;
+            if (current_right_speed > target_right_speed) 
+                current_right_speed = target_right_speed;
+        } else if (current_right_speed > target_right_speed) {
+            current_right_speed -= MAX_SPEED_CHANGE;
+            if (current_right_speed < target_right_speed) 
+                current_right_speed = target_right_speed;
+        }
+    }
+    
+    // 제어 신호 출력
+    handle[0] = cmd;
+    set_motor_speed(PWM_5_ADDR, current_left_speed);
+    set_motor_speed(PWM_6_ADDR, current_right_speed);
+}
+
+// =================== 비상정지 함수 ===================
+void emergency_stop(void) {
+    volatile unsigned int *handle = (volatile unsigned int*)HANDLE_ADDR;
+    
+    // 모든 모터 정지
+    handle[0] = 0;
+    set_motor_speed(PWM_5_ADDR, 0);
+    set_motor_speed(PWM_6_ADDR, 0);
+    
+    // 속도 리셋
+    current_left_speed = 0;
+    current_right_speed = 0;
+    
+    uart_send_string("EMERGENCY STOP!\r\n");
 }
 
 // =================== 개선된 라인 처리 함수 ===================
@@ -150,16 +446,15 @@ void process_data(const char* line) {
         int mode = get_number_improved(line, "MODE=");
         
         if (btn_val != -999 && mode != -999) {
-            char buf[64];
-            snprintf(buf, sizeof(buf), "Button: %d, Mode: %d\r\n", btn_val, mode);
-            uart_send_string(buf);
-            
             // 버튼별 동작 처리
             switch(btn_val) {
                 case 1: uart_send_string("BUCKET DOWN\r\n"); break;
                 case 2: uart_send_string("WORK MODE\r\n"); break;
                 case 4: uart_send_string("DRIVE MODE\r\n"); break;
                 case 8: uart_send_string("BUCKET UP\r\n"); break;
+                case 16: // 비상정지 버튼 (예시)
+                    emergency_stop();
+                    break;
             }
         }
         return;
@@ -169,7 +464,7 @@ void process_data(const char* line) {
     if (is_neutral_command(line)) {
         int mode = get_number_improved(line, "MODE=");
         if (mode != -999) {
-            uart_send_string("NEUTRAL command received\r\n");
+            emergency_stop(); // 중립 명령시 모터 정지
         }
         return;
     }
@@ -192,12 +487,6 @@ void process_data(const char* line) {
     if (x2 != -999) last_x2 = x2; else x2 = last_x2;
     if (y2 != -999) last_y2 = y2; else y2 = last_y2;
     
-    // 디버그 출력 (고정 4자리 형식)
-    char buf[128];
-    snprintf(buf, sizeof(buf), "MODE=%d X1=%04d Y1=%04d X2=%04d Y2=%04d\r\n", 
-             mode, x1, y1, x2, y2);
-    uart_send_string(buf);
-    
     // 제어 실행
     if (mode == 1) {  // Work Mode
         // 중립 체크
@@ -205,19 +494,24 @@ void process_data(const char* line) {
             y1 >= RANGE_MIN && y1 <= RANGE_MAX &&
             x2 >= RANGE_MIN && x2 <= RANGE_MAX &&
             y2 >= RANGE_MIN && y2 <= RANGE_MAX) {
-            uart_send_string("All neutral\r\n");
             return;
         }
         
         uart_send_string("WORK MODE\r\n");
-        move_servo(&x1_angle, x1, PWM_0_ADDR, 1);   // X1: 정방향
-        move_servo(&y1_angle, y1, PWM_1_ADDR, 1);   // Y1: 정방향  
-        move_servo(&x2_angle, x2, PWM_2_ADDR, -1);  // X2: 역방향
-        move_servo(&y2_angle, y2, PWM_3_ADDR, 1);   // Y2: 정방향
+        // 스무스 서보 제어로 변경
+        move_servo_smooth_x1(x1);
+        move_servo_smooth_y1(y1);
+        move_servo_smooth_x2(x2);
+        move_servo_smooth_y2(y2);
     }
     else if (mode == 2) {  // Drive Mode
-        uart_send_string("DRIVE MODE\r\n");
-        move_wheels(y1, y2);
+        // 중립 체크 및 강제 정지
+        if (y1 >= RANGE_MIN && y1 <= RANGE_MAX && 
+            y2 >= RANGE_MIN && y2 <= RANGE_MAX) {
+            force_stop_motors();
+            return;
+        }
+        move_wheels_smooth(y1, y2);  // 부드러운 제어 사용
     }
 }
 
@@ -227,7 +521,8 @@ int main(void) {
     if (XUartLite_Initialize(&Uart_HC05, HC05_UART_DEVICE_ID) != XST_SUCCESS) {
         return XST_FAILURE;
     }
-    uart_send_string("=== Simple Servo Control Start ===\r\n");
+    uart_send_string("=== Enhanced Servo & DC Motor Control Start ===\r\n");
+    
     // 초기 서보 위치 (90도)
     uint32_t duty_min = 4095 * 5 / 200;
     uint32_t duty_max = 4095 * 25 / 200;
@@ -235,18 +530,31 @@ int main(void) {
     uint32_t temp = SYS_CLK_FREQ / 50 / 4095 / 2;
     
     // 모든 서보 초기화
-    uint32_t addrs[] = {PWM_0_ADDR, PWM_1_ADDR, PWM_2_ADDR, PWM_3_ADDR};
+    uint32_t servo_addrs[] = {PWM_0_ADDR, PWM_1_ADDR, PWM_2_ADDR, PWM_3_ADDR};
     for (int i = 0; i < 4; i++) {
-        Xil_Out32(addrs[i] + REG_DUTY, initial_duty);
-        Xil_Out32(addrs[i] + REG_TEMP, temp);
-        Xil_Out32(addrs[i] + REG_DUTYSTEP, 4095);
+        Xil_Out32(servo_addrs[i] + REG_DUTY, initial_duty);
+        Xil_Out32(servo_addrs[i] + REG_TEMP, temp);
+        Xil_Out32(servo_addrs[i] + REG_DUTYSTEP, 4095);
     }
+    uart_send_string("Servos initialized (90 degrees)\r\n");
     
-    uart_send_string("Servos initialized\r\n");
+    // DC모터 초기화 (정지 상태)
+    set_motor_speed(PWM_5_ADDR, 0);  // 왼쪽 바퀴 정지
+    set_motor_speed(PWM_6_ADDR, 0);  // 오른쪽 바퀴 정지
+    uart_send_string("DC Motors initialized (stopped)\r\n");
+    
+    // 핸들 초기화
+    volatile unsigned int *handle = (volatile unsigned int*)HANDLE_ADDR;
+    handle[0] = 0;
+    uart_send_string("Handle initialized\r\n");
+    
+    uart_send_string("System ready!\r\n");
+    
     // 메인 루프
     u8 buffer[BUFFER_SIZE];
     memset(line_buffer, 0, LINE_BUFFER_SIZE);
     line_index = 0;
+    
     while (1) {
         int count = XUartLite_Recv(&Uart_HC05, buffer, sizeof(buffer));
         
@@ -257,11 +565,6 @@ int main(void) {
                 if (ch == '\n') {  // 라인 완료
                     if (line_index > 0) {
                         line_buffer[line_index] = '\0';
-                        
-                        // 원본 출력
-                        uart_send_string("[RX] ");
-                        uart_send_string(line_buffer);
-                        uart_send_string("\r\n");
                         
                         // 처리
                         process_data(line_buffer);
