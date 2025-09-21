@@ -17,7 +17,7 @@
 uint32_t adc_scaled[4] = {0,0,0,0};
 XIic iic_instance;
 
-// LCD 관련 함수들
+// LCD 관련 함수들 (기존과 동일)
 void lcdCommand(uint8_t command)
 {
     uint8_t high_nibble, low_nibble;
@@ -83,7 +83,7 @@ void lcdClear()
     msleep(2);
 }
 
-// 포크레인(굴삭기) 상태 표시 함수
+// 포클레인(굴삭기) 상태 표시 함수
 void displayExcavatorStatus(int mode, uint32_t *joystick_vals)
 {
     char line1[17];  // LCD 한 줄은 16자 + null
@@ -118,24 +118,43 @@ void displayExcavatorStatus(int mode, uint32_t *joystick_vals)
     lcdString(line2);
 }
 
-// UART 송신 (한 글자)
-int simple_uart_send_char(char c) {
-    int timeout = 10000;
-    while (Xil_In32(UART_BASEADDR + 0x8) & 0x8) {
-        if(--timeout <= 0) {
-            xil_printf("UART TX timeout!\r\n");
+// =================== 개선된 UART 송신 함수 ===================
+
+// 더 안전한 UART 문자열 전송 (흐름 제어 추가)
+int safe_uart_send_string(const char* str) {
+    if (str == NULL) return -1;
+    
+    int len = strlen(str);
+    if (len == 0) return 0;
+    
+    // 전송 전 충분한 대기
+    for(int timeout = 0; timeout < 1000; timeout++) {
+        if(!(Xil_In32(UART_BASEADDR + 0x8) & 0x08)) break;
+        usleep(10);
+    }
+    
+    // 천천히 한 문자씩 전송 (흐름 제어)
+    for(int i = 0; i < len; i++) {
+        int retry = 0;
+        while((Xil_In32(UART_BASEADDR + 0x8) & 0x08) && retry < 5000) {
+            retry++;
+            usleep(1); // 1μs 대기
+        }
+        
+        if(retry >= 5000) {
+            xil_printf("UART timeout at char %d\r\n", i);
             return -1;
         }
+        
+        Xil_Out8(UART_BASEADDR + 0x4, str[i]);
+        
+        // 문자 간 작은 지연 (수신측 처리 시간 확보)
+        usleep(50); // 50μs 대기 (전송 속도 조절)
     }
-    Xil_Out8(UART_BASEADDR + 0x4, c);
-    return 0;
-}
-
-// UART 문자열 전송
-int simple_uart_send_string(const char* str) {
-    while(*str) {
-        if(simple_uart_send_char(*str++) != 0) return -1;
-    }
+    
+    // 전송 완료 후 추가 대기
+    usleep(1000); // 1ms 대기
+    
     return 0;
 }
 
@@ -144,11 +163,21 @@ uint32_t read_raw_btn() {
     return Xil_In32(BTN_BASE + 0x8);
 }
 
-// 버튼 + 모드 데이터 전송
+// **수정된 버튼 + 모드 데이터 전송 (고정 길이 형식)**
 int send_button_mode_data(uint32_t pressed_buttons, int mode) {
-    char buf[64];
-    int len = snprintf(buf, sizeof(buf), "BTN:%u,MODE:%d\r\n", pressed_buttons, mode);
-    return simple_uart_send_string(buf);
+    char buf[32];
+    memset(buf, 0, sizeof(buf));
+    
+    // 고정 길이로 전송 (BTN은 2자리, MODE는 1자리)
+    int len = snprintf(buf, sizeof(buf)-1, "BTN=%02u MODE=%d\n", 
+                      pressed_buttons, mode);
+    
+    if (len >= sizeof(buf)) {
+        xil_printf("Buffer overflow in send_button_mode_data\r\n");
+        return -1;
+    }
+    
+    return safe_uart_send_string(buf);
 }
 
 // ADC 보정
@@ -164,50 +193,84 @@ uint32_t remap_adc(uint32_t raw, uint32_t raw_min, uint32_t raw_max) {
     return result;
 }
 
-// 조이스틱 + 모드 데이터 전송
+// **핵심 수정: 조이스틱 + 모드 데이터 전송 (고정 4자리 형식)**
 int send_joystick_mode_data(uint32_t *vals, int mode) {
-    char buf[128];
-    int len = snprintf(buf, sizeof(buf),
-        "MODE:%d\r\nX1:%u\r\nY1:%u\r\nX2:%u\r\nY2:%u\r\nEND\r\n",
-        mode, vals[3], vals[2], vals[1], vals[0]);
-    return simple_uart_send_string(buf);
-}
-
-// 중립값 전송
-int send_neutral_mode(int mode) {
     char buf[64];
-    int len = snprintf(buf, sizeof(buf), "MODE:%d\r\nNEUTRAL\r\n", mode);
-    return simple_uart_send_string(buf);
+    
+    // 버퍼 초기화
+    memset(buf, 0, sizeof(buf));
+    
+    // **고정 4자리 형식으로 전송 (0001, 0123, 4095 등)**
+    // 각 값을 4자리로 고정하여 파싱 문제 해결
+    int len = snprintf(buf, sizeof(buf)-1,
+        "MODE=%d X1=%04u Y1=%04u X2=%04u Y2=%04u\n",
+        mode, vals[3], vals[2], vals[1], vals[0]);
+    
+    // 길이 체크
+    if (len >= sizeof(buf)) {
+        xil_printf("Buffer overflow in send_joystick_mode_data\r\n");
+        return -1;
+    }
+    
+    // 데이터 검증 (범위 체크)
+    for(int i = 0; i < 4; i++) {
+        if(vals[i] > 4095) {
+            xil_printf("Invalid ADC value[%d]: %u\r\n", i, vals[i]);
+            return -1;
+        }
+    }
+    
+    // 안전한 전송
+    return safe_uart_send_string(buf);
 }
 
+// **수정된 NEUTRAL 전송 (고정 형식)**
+int send_neutral_mode(int mode) {
+    char buf[32];
+    memset(buf, 0, sizeof(buf));
+    
+    // 고정 형식으로 NEUTRAL 전송
+    int len = snprintf(buf, sizeof(buf)-1, "MODE=%d NEUTRAL=1\n", mode);
+    
+    if (len >= sizeof(buf)) {
+        xil_printf("Buffer overflow in send_neutral_mode\r\n");
+        return -1;
+    }
+    
+    return safe_uart_send_string(buf);
+}
+
+// =================== 메인 함수 ===================
 int main() {
     init_platform();
-    print("=== Excavator Control System - Basys3 ===\n\r");
+    print("=== Excavator Control System - Basys3 (Fixed Format) ===\n\r");
     
     // I2C LCD 초기화
     XIic_Initialize(&iic_instance, IIC_ADDR);
     lcdInit();
     
-    // 초기 연결 테스트
-    if(simple_uart_send_string("INIT:Excavator_Ready\r\n") == 0) {
+    // 초기 연결 테스트 (천천히)
+    usleep(100000); // 100ms 대기
+    if(safe_uart_send_string("INIT Excavator_Ready\n") == 0) {
         print("DEBUG: UART OK\r\n");
     } else {
         print("ERROR: UART failed!\r\n");
     }
     
     // ADC 보정 상수
-    const uint32_t RAW_MIN[4] = {10, 10, 10, 10};
+    const uint32_t RAW_MIN[4] = {120, 120, 120, 120};
     const uint32_t RAW_MAX[4] = {3000, 3000, 3000, 3000};
     const uint32_t NEUTRAL[4] = {2048, 2048, 2048, 2048};
     const uint32_t DEADZONE = 300;
     
     u32 adc_raw[4];
     int idle_counter = 0;
-    int current_mode = 1;  // 현재 모드 (-1: 대기 상태)
+    int current_mode = 1;
     int display_counter = 0;
+    int send_counter = 0; // 전송 간격 조절
     
     // 버튼 디바운싱 변수들
-    uint32_t prev_btn_state = 0xF;  // 초기값: 모든 버튼이 눌리지 않은 상태
+    uint32_t prev_btn_state = 0xF;
     uint32_t debounce_count = 0;
     
     // 초기 LCD 표시
@@ -215,37 +278,36 @@ int main() {
     
     while(1) {
         // 버튼 상태 읽기 및 디바운싱 처리
-      uint32_t btn_data = read_raw_btn();
+        uint32_t btn_data = read_raw_btn();
 
-// ---------------- 0x1,0x8 버튼 반복 처리 (Active Low) ----------------
-if ((btn_data & 0x1) == 0) {
-    send_button_mode_data(0x1, current_mode);
-    xil_printf("Bucket Down Action\n");
-}
-if ((btn_data & 0x8) == 0) {
-    send_button_mode_data(0x8, current_mode);
-    xil_printf("Bucket Up Action\n");
-}
+        // 0x1,0x8 버튼 반복 처리 (전송 간격 조절)
+        if ((btn_data & 0x1) == 0 && send_counter % 10 == 0) {
+            send_button_mode_data(0x1, current_mode);
+            xil_printf("Bucket Down Action\n");
+        }
+        if ((btn_data & 0x8) == 0 && send_counter % 10 == 0) {
+            send_button_mode_data(0x8, current_mode);
+            xil_printf("Bucket Up Action\n");
+        }
 
-// ---------------- 0x2,0x4 버튼 단발 처리 ----------------
-uint32_t pressed_1_2 = (prev_btn_state & (~btn_data)) & 0x6;  // 단발 버튼 1,2
-if (pressed_1_2) {
-    if (pressed_1_2 & 0x2) {
-        current_mode = 1;
-        xil_printf("Work Mode Selected\n");
-        send_button_mode_data(0x2, current_mode);
-        displayExcavatorStatus(current_mode, adc_scaled);
-    }
-    if (pressed_1_2 & 0x4) {
-        current_mode = 2;
-        xil_printf("Drive Mode Selected\n");
-        send_button_mode_data(0x4, current_mode);
-        displayExcavatorStatus(current_mode, adc_scaled);
-    }
-}
+        // 0x2,0x4 버튼 단발 처리
+        uint32_t pressed_1_2 = (prev_btn_state & (~btn_data)) & 0x6;
+        if (pressed_1_2) {
+            if (pressed_1_2 & 0x2) {
+                current_mode = 1;
+                xil_printf("Work Mode Selected\n");
+                send_button_mode_data(0x2, current_mode);
+                displayExcavatorStatus(current_mode, adc_scaled);
+            }
+            if (pressed_1_2 & 0x4) {
+                current_mode = 2;
+                xil_printf("Drive Mode Selected\n");
+                send_button_mode_data(0x4, current_mode);
+                displayExcavatorStatus(current_mode, adc_scaled);
+            }
+        }
 
-// 단발 버튼 상태 갱신 (0x2,0x4만)
-prev_btn_state = (prev_btn_state & 0x9) | (btn_data & 0x6);
+        prev_btn_state = (prev_btn_state & 0x9) | (btn_data & 0x6);
         
         // ADC 읽기
         for(int i=0;i<4;i++) {
@@ -262,15 +324,27 @@ prev_btn_state = (prev_btn_state & 0x9) | (btn_data & 0x6);
             }
         }
         
-        if(active) {
-            idle_counter = 0;
-            send_joystick_mode_data(adc_scaled, current_mode);
-            xil_printf("MODE=%d,X1=%u,Y1=%u,X2=%u,Y2=%u\n",
-                current_mode, adc_scaled[3], adc_scaled[2],
-                adc_scaled[1], adc_scaled[0]);
-        } else {
-            idle_counter++;
-            if(idle_counter == 1) send_neutral_mode(current_mode);
+        // 전송 주기 조절 (10ms마다 전송)
+        if(send_counter % 10 == 0) {
+            if(active) {
+                idle_counter = 0;
+                
+                // 조이스틱 데이터 전송
+                int result = send_joystick_mode_data(adc_scaled, current_mode);
+                if (result != 0) {
+                    xil_printf("UART send failed!\n");
+                }
+                
+                xil_printf("MODE=%d,X1=%04u,Y1=%04u,X2=%04u,Y2=%04u\n",
+                    current_mode, adc_scaled[3], adc_scaled[2],
+                    adc_scaled[1], adc_scaled[0]);
+            } else {
+                idle_counter++;
+                if(idle_counter == 1) {
+                    send_neutral_mode(current_mode);
+                    xil_printf("Sent NEUTRAL\n");
+                }
+            }
         }
         
         // LCD 주기적 업데이트 (500ms마다)
@@ -280,7 +354,8 @@ prev_btn_state = (prev_btn_state & 0x9) | (btn_data & 0x6);
             display_counter = 0;
         }
         
-        usleep(1); // 1ms
+        send_counter++;
+        usleep(1000); // 1ms - 전송 간격 조절
     }
     
     cleanup_platform();
