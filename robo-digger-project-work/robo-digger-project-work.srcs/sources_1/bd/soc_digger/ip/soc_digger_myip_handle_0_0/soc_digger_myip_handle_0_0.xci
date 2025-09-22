@@ -4,7 +4,7 @@
     "xci_name": "soc_digger_myip_handle_0_0",
     "cell_name": "myip_handle_0",
     "component_reference": "user.org:user:myip_handle:1.0",
-    "ip_revision": "3",
+    "ip_revision": "6",
     "gen_directory": "../../../../../../robo-digger-project-work.gen/sources_1/bd/soc_digger/ip/soc_digger_myip_handle_0_0",
     "parameters": {
       "component_parameters": {
@@ -33,7 +33,7 @@
       },
       "runtime_parameters": {
         "IPCONTEXT": [ { "value": "IP_Integrator" } ],
-        "IPREVISION": [ { "value": "3" } ],
+        "IPREVISION": [ { "value": "6" } ],
         "MANAGED": [ { "value": "TRUE" } ],
         "OUTPUTDIR": [ { "value": "../../../../../../robo-digger-project-work.gen/sources_1/bd/soc_digger/ip/soc_digger_myip_handle_0_0" } ],
         "SELECTEDSIMMODEL": [ { "value": "" } ],

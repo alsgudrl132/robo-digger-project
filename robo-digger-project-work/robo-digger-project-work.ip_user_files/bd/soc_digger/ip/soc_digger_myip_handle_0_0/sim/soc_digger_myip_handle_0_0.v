@@ -48,7 +48,7 @@
 
 
 // IP VLNV: user.org:user:myip_handle:1.0
-// IP Revision: 3
+// IP Revision: 6
 
 `timescale 1ns/1ps
 

@@ -12,17 +12,14 @@ module soc_digger (
   sys_clock,
   rx_0,
   tx_0,
+  motor_control_0,
   pwm_0,
   pwm_1,
   pwm_2,
   pwm_3,
   pwm_4,
   pwm_5,
-  pwm_6,
-  pwm_7,
-  pwm_8,
-  pwm_9,
-  motor_control_0
+  pwm_6
 );
 
   (* X_INTERFACE_INFO = "xilinx.com:interface:uart:1.0 usb_uart RxD" *)
@@ -43,6 +40,8 @@ module soc_digger (
   (* X_INTERFACE_IGNORE = "true" *)
   output tx_0;
   (* X_INTERFACE_IGNORE = "true" *)
+  output [3:0]motor_control_0;
+  (* X_INTERFACE_IGNORE = "true" *)
   output pwm_0;
   (* X_INTERFACE_IGNORE = "true" *)
   output pwm_1;
@@ -56,14 +55,6 @@ module soc_digger (
   output pwm_5;
   (* X_INTERFACE_IGNORE = "true" *)
   output pwm_6;
-  (* X_INTERFACE_IGNORE = "true" *)
-  output pwm_7;
-  (* X_INTERFACE_IGNORE = "true" *)
-  output pwm_8;
-  (* X_INTERFACE_IGNORE = "true" *)
-  output pwm_9;
-  (* X_INTERFACE_IGNORE = "true" *)
-  output [3:0]motor_control_0;
 
   // stub module has no contents
 

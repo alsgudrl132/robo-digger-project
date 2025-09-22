@@ -21,7 +21,7 @@
       "targetSetup": {
         "resetSystem": true,
         "programDevice": true,
-        "bitstreamFile": "${workspaceFolder}/app_digger/_ide/bitstream/soc_digger_wrapper.bit",
+        "bitstreamFile": "${workspaceFolder}/app_digger/_ide/bitstream/soc_digger_wrapper2.bit",
         "downloadElf": [
           {
             "core": "microblaze_riscv_0",

@@ -1,4 +1,4 @@
-# 2025-09-21T10:32:31.445108
+# 2025-09-22T15:59:53.845942
 import vitis
 
 client = vitis.create_client()
@@ -8,6 +8,18 @@ platform = client.get_component(name="platform_digger")
 status = platform.build()
 
 comp = client.get_component(name="app_digger")
+comp.build()
+
+client.delete_component(name="platform_digger")
+
+client.delete_component(name="app_digger")
+
+platform = client.create_platform_component(name = "platform_digger",hw_design = "$COMPONENT_LOCATION/../../robo-digger-project-work/soc_digger_wrapper2.xsa",os = "standalone",cpu = "microblaze_riscv_0",domain_name = "standalone_microblaze_riscv_0")
+
+comp = client.create_app_component(name="app_digger",platform = "$COMPONENT_LOCATION/../platform_digger/export/platform_digger/platform_digger.xpfm",domain = "standalone_microblaze_riscv_0",template = "hello_world")
+
+status = platform.build()
+
 comp.build()
 
 status = platform.build()

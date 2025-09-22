@@ -48,7 +48,7 @@
 
 
 // IP VLNV: user.org:user:myip_handle:1.0
-// IP Revision: 3
+// IP Revision: 6
 
 (* X_CORE_INFO = "myip_handle,Vivado 2024.2" *)
 (* CHECK_LICENSE_TYPE = "soc_digger_myip_handle_0_0,myip_handle,{}" *)

@@ -316,73 +316,7 @@
 			reg = <0x44aa0000 0x10000>;
 			xlnx,name = "myip_handle_0";
 		};
-		myip_pwm_0: myip_pwm@44a00000 {
-			xlnx,rable = <0>;
-			xlnx,s00-axi-data-width = <32>;
-			compatible = "xlnx,myip-pwm-1.0";
-			status = "okay";
-			xlnx,s00-axi-addr-width = <5>;
-			xlnx,ip-name = "myip_pwm";
-			xlnx,edk-iptype = "PERIPHERAL";
-			reg = <0x44a00000 0x10000>;
-			xlnx,name = "myip_pwm_0";
-		};
-		myip_pwm_1: myip_pwm@44a10000 {
-			xlnx,rable = <0>;
-			xlnx,s00-axi-data-width = <32>;
-			compatible = "xlnx,myip-pwm-1.0";
-			status = "okay";
-			xlnx,s00-axi-addr-width = <5>;
-			xlnx,ip-name = "myip_pwm";
-			xlnx,edk-iptype = "PERIPHERAL";
-			reg = <0x44a10000 0x10000>;
-			xlnx,name = "myip_pwm_1";
-		};
-		myip_pwm_2: myip_pwm@44a20000 {
-			xlnx,rable = <0>;
-			xlnx,s00-axi-data-width = <32>;
-			compatible = "xlnx,myip-pwm-1.0";
-			status = "okay";
-			xlnx,s00-axi-addr-width = <5>;
-			xlnx,ip-name = "myip_pwm";
-			xlnx,edk-iptype = "PERIPHERAL";
-			reg = <0x44a20000 0x10000>;
-			xlnx,name = "myip_pwm_2";
-		};
-		myip_pwm_3: myip_pwm@44a30000 {
-			xlnx,rable = <0>;
-			xlnx,s00-axi-data-width = <32>;
-			compatible = "xlnx,myip-pwm-1.0";
-			status = "okay";
-			xlnx,s00-axi-addr-width = <5>;
-			xlnx,ip-name = "myip_pwm";
-			xlnx,edk-iptype = "PERIPHERAL";
-			reg = <0x44a30000 0x10000>;
-			xlnx,name = "myip_pwm_3";
-		};
-		myip_pwm_4: myip_pwm@44a40000 {
-			xlnx,rable = <0>;
-			xlnx,s00-axi-data-width = <32>;
-			compatible = "xlnx,myip-pwm-1.0";
-			status = "okay";
-			xlnx,s00-axi-addr-width = <5>;
-			xlnx,ip-name = "myip_pwm";
-			xlnx,edk-iptype = "PERIPHERAL";
-			reg = <0x44a40000 0x10000>;
-			xlnx,name = "myip_pwm_4";
-		};
-		myip_pwm_5: myip_pwm@44a50000 {
-			xlnx,rable = <0>;
-			xlnx,s00-axi-data-width = <32>;
-			compatible = "xlnx,myip-pwm-1.0";
-			status = "okay";
-			xlnx,s00-axi-addr-width = <5>;
-			xlnx,ip-name = "myip_pwm";
-			xlnx,edk-iptype = "PERIPHERAL";
-			reg = <0x44a50000 0x10000>;
-			xlnx,name = "myip_pwm_5";
-		};
-		myip_pwm_6: myip_pwm@44a60000 {
+		myip_pwm_blade: myip_pwm@44a60000 {
 			xlnx,rable = <0>;
 			xlnx,s00-axi-data-width = <32>;
 			compatible = "xlnx,myip-pwm-1.0";
@@ -391,9 +325,20 @@
 			xlnx,ip-name = "myip_pwm";
 			xlnx,edk-iptype = "PERIPHERAL";
 			reg = <0x44a60000 0x10000>;
-			xlnx,name = "myip_pwm_6";
+			xlnx,name = "myip_pwm_blade";
 		};
-		myip_pwm_7: myip_pwm@44a70000 {
+		myip_pwm_left_wheel: myip_pwm@44a40000 {
+			xlnx,rable = <0>;
+			xlnx,s00-axi-data-width = <32>;
+			compatible = "xlnx,myip-pwm-1.0";
+			status = "okay";
+			xlnx,s00-axi-addr-width = <5>;
+			xlnx,ip-name = "myip_pwm";
+			xlnx,edk-iptype = "PERIPHERAL";
+			reg = <0x44a40000 0x10000>;
+			xlnx,name = "myip_pwm_left_wheel";
+		};
+		myip_pwm_right_wheel: myip_pwm@44a70000 {
 			xlnx,rable = <0>;
 			xlnx,s00-axi-data-width = <32>;
 			compatible = "xlnx,myip-pwm-1.0";
@@ -402,9 +347,9 @@
 			xlnx,ip-name = "myip_pwm";
 			xlnx,edk-iptype = "PERIPHERAL";
 			reg = <0x44a70000 0x10000>;
-			xlnx,name = "myip_pwm_7";
+			xlnx,name = "myip_pwm_right_wheel";
 		};
-		myip_pwm_8: myip_pwm@44a80000 {
+		myip_pwm_x1: myip_pwm@44a00000 {
 			xlnx,rable = <0>;
 			xlnx,s00-axi-data-width = <32>;
 			compatible = "xlnx,myip-pwm-1.0";
@@ -412,10 +357,10 @@
 			xlnx,s00-axi-addr-width = <5>;
 			xlnx,ip-name = "myip_pwm";
 			xlnx,edk-iptype = "PERIPHERAL";
-			reg = <0x44a80000 0x10000>;
-			xlnx,name = "myip_pwm_8";
+			reg = <0x44a00000 0x10000>;
+			xlnx,name = "myip_pwm_x1";
 		};
-		myip_pwm_9: myip_pwm@44a90000 {
+		myip_pwm_x2: myip_pwm@44a20000 {
 			xlnx,rable = <0>;
 			xlnx,s00-axi-data-width = <32>;
 			compatible = "xlnx,myip-pwm-1.0";
@@ -423,8 +368,30 @@
 			xlnx,s00-axi-addr-width = <5>;
 			xlnx,ip-name = "myip_pwm";
 			xlnx,edk-iptype = "PERIPHERAL";
-			reg = <0x44a90000 0x10000>;
-			xlnx,name = "myip_pwm_9";
+			reg = <0x44a20000 0x10000>;
+			xlnx,name = "myip_pwm_x2";
+		};
+		myip_pwm_y1: myip_pwm@44a10000 {
+			xlnx,rable = <0>;
+			xlnx,s00-axi-data-width = <32>;
+			compatible = "xlnx,myip-pwm-1.0";
+			status = "okay";
+			xlnx,s00-axi-addr-width = <5>;
+			xlnx,ip-name = "myip_pwm";
+			xlnx,edk-iptype = "PERIPHERAL";
+			reg = <0x44a10000 0x10000>;
+			xlnx,name = "myip_pwm_y1";
+		};
+		myip_pwm_y2: myip_pwm@44a30000 {
+			xlnx,rable = <0>;
+			xlnx,s00-axi-data-width = <32>;
+			compatible = "xlnx,myip-pwm-1.0";
+			status = "okay";
+			xlnx,s00-axi-addr-width = <5>;
+			xlnx,ip-name = "myip_pwm";
+			xlnx,edk-iptype = "PERIPHERAL";
+			reg = <0x44a30000 0x10000>;
+			xlnx,name = "myip_pwm_y2";
 		};
 	};
 };

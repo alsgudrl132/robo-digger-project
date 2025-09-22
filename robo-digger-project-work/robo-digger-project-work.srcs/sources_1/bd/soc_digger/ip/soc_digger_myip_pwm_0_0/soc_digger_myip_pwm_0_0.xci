@@ -2,7 +2,7 @@
   "schema": "xilinx.com:schema:json_instance:1.0",
   "ip_inst": {
     "xci_name": "soc_digger_myip_pwm_0_0",
-    "cell_name": "myip_pwm_0",
+    "cell_name": "myip_pwm_x1",
     "component_reference": "user.org:user:myip_pwm:1.0",
     "ip_revision": "3",
     "gen_directory": "../../../../../../robo-digger-project-work.gen/sources_1/bd/soc_digger/ip/soc_digger_myip_pwm_0_0",

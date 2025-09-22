@@ -83,85 +83,61 @@
 #define XPAR_MYIP_HANDLE_0_BASEADDR 0x44aa0000
 #define XPAR_MYIP_HANDLE_0_HIGHADDR 0x44aaffff
 
-/* Definitions for peripheral MYIP_PWM_0 */
-#define XPAR_MYIP_PWM_0_BASEADDR 0x44a00000
-#define XPAR_MYIP_PWM_0_HIGHADDR 0x44a0ffff
+/* Definitions for peripheral MYIP_PWM_BLADE */
+#define XPAR_MYIP_PWM_BLADE_BASEADDR 0x44a60000
+#define XPAR_MYIP_PWM_BLADE_HIGHADDR 0x44a6ffff
 
-/* Canonical definitions for peripheral MYIP_PWM_0 */
-#define XPAR_MYIP_PWM_0_BASEADDR 0x44a00000
-#define XPAR_MYIP_PWM_0_HIGHADDR 0x44a0ffff
+/* Canonical definitions for peripheral MYIP_PWM_BLADE */
+#define XPAR_MYIP_PWM_0_BASEADDR 0x44a60000
+#define XPAR_MYIP_PWM_0_HIGHADDR 0x44a6ffff
 
-/* Definitions for peripheral MYIP_PWM_1 */
-#define XPAR_MYIP_PWM_1_BASEADDR 0x44a10000
-#define XPAR_MYIP_PWM_1_HIGHADDR 0x44a1ffff
+/* Definitions for peripheral MYIP_PWM_LEFT_WHEEL */
+#define XPAR_MYIP_PWM_LEFT_WHEEL_BASEADDR 0x44a40000
+#define XPAR_MYIP_PWM_LEFT_WHEEL_HIGHADDR 0x44a4ffff
 
-/* Canonical definitions for peripheral MYIP_PWM_1 */
-#define XPAR_MYIP_PWM_1_BASEADDR 0x44a10000
-#define XPAR_MYIP_PWM_1_HIGHADDR 0x44a1ffff
+/* Canonical definitions for peripheral MYIP_PWM_LEFT_WHEEL */
+#define XPAR_MYIP_PWM_1_BASEADDR 0x44a40000
+#define XPAR_MYIP_PWM_1_HIGHADDR 0x44a4ffff
 
-/* Definitions for peripheral MYIP_PWM_2 */
-#define XPAR_MYIP_PWM_2_BASEADDR 0x44a20000
-#define XPAR_MYIP_PWM_2_HIGHADDR 0x44a2ffff
+/* Definitions for peripheral MYIP_PWM_RIGHT_WHEEL */
+#define XPAR_MYIP_PWM_RIGHT_WHEEL_BASEADDR 0x44a70000
+#define XPAR_MYIP_PWM_RIGHT_WHEEL_HIGHADDR 0x44a7ffff
 
-/* Canonical definitions for peripheral MYIP_PWM_2 */
-#define XPAR_MYIP_PWM_2_BASEADDR 0x44a20000
-#define XPAR_MYIP_PWM_2_HIGHADDR 0x44a2ffff
+/* Canonical definitions for peripheral MYIP_PWM_RIGHT_WHEEL */
+#define XPAR_MYIP_PWM_2_BASEADDR 0x44a70000
+#define XPAR_MYIP_PWM_2_HIGHADDR 0x44a7ffff
 
-/* Definitions for peripheral MYIP_PWM_3 */
-#define XPAR_MYIP_PWM_3_BASEADDR 0x44a30000
-#define XPAR_MYIP_PWM_3_HIGHADDR 0x44a3ffff
+/* Definitions for peripheral MYIP_PWM_X1 */
+#define XPAR_MYIP_PWM_X1_BASEADDR 0x44a00000
+#define XPAR_MYIP_PWM_X1_HIGHADDR 0x44a0ffff
 
-/* Canonical definitions for peripheral MYIP_PWM_3 */
-#define XPAR_MYIP_PWM_3_BASEADDR 0x44a30000
-#define XPAR_MYIP_PWM_3_HIGHADDR 0x44a3ffff
+/* Canonical definitions for peripheral MYIP_PWM_X1 */
+#define XPAR_MYIP_PWM_3_BASEADDR 0x44a00000
+#define XPAR_MYIP_PWM_3_HIGHADDR 0x44a0ffff
 
-/* Definitions for peripheral MYIP_PWM_4 */
-#define XPAR_MYIP_PWM_4_BASEADDR 0x44a40000
-#define XPAR_MYIP_PWM_4_HIGHADDR 0x44a4ffff
+/* Definitions for peripheral MYIP_PWM_X2 */
+#define XPAR_MYIP_PWM_X2_BASEADDR 0x44a20000
+#define XPAR_MYIP_PWM_X2_HIGHADDR 0x44a2ffff
 
-/* Canonical definitions for peripheral MYIP_PWM_4 */
-#define XPAR_MYIP_PWM_4_BASEADDR 0x44a40000
-#define XPAR_MYIP_PWM_4_HIGHADDR 0x44a4ffff
+/* Canonical definitions for peripheral MYIP_PWM_X2 */
+#define XPAR_MYIP_PWM_4_BASEADDR 0x44a20000
+#define XPAR_MYIP_PWM_4_HIGHADDR 0x44a2ffff
 
-/* Definitions for peripheral MYIP_PWM_5 */
-#define XPAR_MYIP_PWM_5_BASEADDR 0x44a50000
-#define XPAR_MYIP_PWM_5_HIGHADDR 0x44a5ffff
+/* Definitions for peripheral MYIP_PWM_Y1 */
+#define XPAR_MYIP_PWM_Y1_BASEADDR 0x44a10000
+#define XPAR_MYIP_PWM_Y1_HIGHADDR 0x44a1ffff
 
-/* Canonical definitions for peripheral MYIP_PWM_5 */
-#define XPAR_MYIP_PWM_5_BASEADDR 0x44a50000
-#define XPAR_MYIP_PWM_5_HIGHADDR 0x44a5ffff
+/* Canonical definitions for peripheral MYIP_PWM_Y1 */
+#define XPAR_MYIP_PWM_5_BASEADDR 0x44a10000
+#define XPAR_MYIP_PWM_5_HIGHADDR 0x44a1ffff
 
-/* Definitions for peripheral MYIP_PWM_6 */
-#define XPAR_MYIP_PWM_6_BASEADDR 0x44a60000
-#define XPAR_MYIP_PWM_6_HIGHADDR 0x44a6ffff
+/* Definitions for peripheral MYIP_PWM_Y2 */
+#define XPAR_MYIP_PWM_Y2_BASEADDR 0x44a30000
+#define XPAR_MYIP_PWM_Y2_HIGHADDR 0x44a3ffff
 
-/* Canonical definitions for peripheral MYIP_PWM_6 */
-#define XPAR_MYIP_PWM_6_BASEADDR 0x44a60000
-#define XPAR_MYIP_PWM_6_HIGHADDR 0x44a6ffff
-
-/* Definitions for peripheral MYIP_PWM_7 */
-#define XPAR_MYIP_PWM_7_BASEADDR 0x44a70000
-#define XPAR_MYIP_PWM_7_HIGHADDR 0x44a7ffff
-
-/* Canonical definitions for peripheral MYIP_PWM_7 */
-#define XPAR_MYIP_PWM_7_BASEADDR 0x44a70000
-#define XPAR_MYIP_PWM_7_HIGHADDR 0x44a7ffff
-
-/* Definitions for peripheral MYIP_PWM_8 */
-#define XPAR_MYIP_PWM_8_BASEADDR 0x44a80000
-#define XPAR_MYIP_PWM_8_HIGHADDR 0x44a8ffff
-
-/* Canonical definitions for peripheral MYIP_PWM_8 */
-#define XPAR_MYIP_PWM_8_BASEADDR 0x44a80000
-#define XPAR_MYIP_PWM_8_HIGHADDR 0x44a8ffff
-
-/* Definitions for peripheral MYIP_PWM_9 */
-#define XPAR_MYIP_PWM_9_BASEADDR 0x44a90000
-#define XPAR_MYIP_PWM_9_HIGHADDR 0x44a9ffff
-
-/* Canonical definitions for peripheral MYIP_PWM_9 */
-#define XPAR_MYIP_PWM_9_BASEADDR 0x44a90000
-#define XPAR_MYIP_PWM_9_HIGHADDR 0x44a9ffff
+/* Canonical definitions for peripheral MYIP_PWM_Y2 */
+#define XPAR_MYIP_PWM_6_BASEADDR 0x44a30000
+#define XPAR_MYIP_PWM_6_HIGHADDR 0x44a3ffff
 
 /*  BOARD definition */
 #define XPS_BOARD_BASYS3

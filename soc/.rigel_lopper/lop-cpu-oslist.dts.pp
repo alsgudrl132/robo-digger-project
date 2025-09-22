@@ -1,4 +1,4 @@
-#line 1 "/home/user11/tools/Vitis/2024.2/tps/lnx64/lopper-1.1.0/env/lib/python3.8/site-packages/lopper/lops/lop-cpu-oslist.dts"
+#line 1 "/tools/Xilinx/Vitis/2024.2/tps/lnx64/lopper-1.1.0/env/lib/python3.8/site-packages/lopper/lops/lop-cpu-oslist.dts"
 /*
  * Copyright (C) 2024 Advanced Micro Devices, Inc.  All rights reserved.
  *

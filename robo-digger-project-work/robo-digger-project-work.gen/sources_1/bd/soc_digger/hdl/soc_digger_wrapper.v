@@ -2,7 +2,7 @@
 //Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
 //--------------------------------------------------------------------------------
 //Tool Version: Vivado v.2024.2 (lin64) Build 5239630 Fri Nov 08 22:34:34 MST 2024
-//Date        : Thu Sep 18 20:20:17 2025
+//Date        : Mon Sep 22 16:18:25 2025
 //Host        : min-MacBookPro15-1 running 64-bit Ubuntu 24.04.3 LTS
 //Command     : generate_target soc_digger_wrapper.bd
 //Design      : soc_digger_wrapper
@@ -19,9 +19,6 @@ module soc_digger_wrapper
     pwm_4,
     pwm_5,
     pwm_6,
-    pwm_7,
-    pwm_8,
-    pwm_9,
     reset,
     rx_0,
     sys_clock,
@@ -36,9 +33,6 @@ module soc_digger_wrapper
   output pwm_4;
   output pwm_5;
   output pwm_6;
-  output pwm_7;
-  output pwm_8;
-  output pwm_9;
   input reset;
   input rx_0;
   input sys_clock;
@@ -54,9 +48,6 @@ module soc_digger_wrapper
   wire pwm_4;
   wire pwm_5;
   wire pwm_6;
-  wire pwm_7;
-  wire pwm_8;
-  wire pwm_9;
   wire reset;
   wire rx_0;
   wire sys_clock;
@@ -73,9 +64,6 @@ module soc_digger_wrapper
         .pwm_4(pwm_4),
         .pwm_5(pwm_5),
         .pwm_6(pwm_6),
-        .pwm_7(pwm_7),
-        .pwm_8(pwm_8),
-        .pwm_9(pwm_9),
         .reset(reset),
         .rx_0(rx_0),
         .sys_clock(sys_clock),

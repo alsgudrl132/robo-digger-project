@@ -3,8 +3,8 @@
   "type": "PLATFORM",
   "configuration": {
     "description": "",
-    "xsa": "/home/min/robo-digger-project/robo-digger-project-work/soc_digger_wrapper.xsa",
-    "xsaPathInPlatform": "platform_digger/hw/soc_digger_wrapper.xsa",
+    "xsa": "/home/min/robo-digger-project/robo-digger-project-work/soc_digger_wrapper2.xsa",
+    "xsaPathInPlatform": "platform_digger/hw/soc_digger_wrapper2.xsa",
     "emulationXsa": "",
     "emulationXsaPathInPlatform": "",
     "isCustomFSBL": false,

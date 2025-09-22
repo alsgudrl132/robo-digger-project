@@ -290,7 +290,7 @@
                 "MI": "M_AXI_DP",
                 "MS": "SEG_myip_pwm_0_S00_AXI_reg",
                 "MV": "xilinx.com:ip:microblaze_riscv:1.0",
-                "SX": "/myip_pwm_0",
+                "SX": "/myip_pwm_x1",
                 "SI": "S00_AXI",
                 "SS": "S00_AXI_reg",
                 "SV": "user.org:user:myip_pwm:1.0",
@@ -308,7 +308,7 @@
                 "MI": "M_AXI_DP",
                 "MS": "SEG_myip_pwm_1_S00_AXI_reg",
                 "MV": "xilinx.com:ip:microblaze_riscv:1.0",
-                "SX": "/myip_pwm_1",
+                "SX": "/myip_pwm_y1",
                 "SI": "S00_AXI",
                 "SS": "S00_AXI_reg",
                 "SV": "user.org:user:myip_pwm:1.0",
@@ -326,7 +326,7 @@
                 "MI": "M_AXI_DP",
                 "MS": "SEG_myip_pwm_2_S00_AXI_reg",
                 "MV": "xilinx.com:ip:microblaze_riscv:1.0",
-                "SX": "/myip_pwm_2",
+                "SX": "/myip_pwm_x2",
                 "SI": "S00_AXI",
                 "SS": "S00_AXI_reg",
                 "SV": "user.org:user:myip_pwm:1.0",
@@ -344,7 +344,7 @@
                 "MI": "M_AXI_DP",
                 "MS": "SEG_myip_pwm_3_S00_AXI_reg",
                 "MV": "xilinx.com:ip:microblaze_riscv:1.0",
-                "SX": "/myip_pwm_3",
+                "SX": "/myip_pwm_y2",
                 "SI": "S00_AXI",
                 "SS": "S00_AXI_reg",
                 "SV": "user.org:user:myip_pwm:1.0",
@@ -362,7 +362,7 @@
                 "MI": "M_AXI_DP",
                 "MS": "SEG_myip_pwm_4_S00_AXI_reg",
                 "MV": "xilinx.com:ip:microblaze_riscv:1.0",
-                "SX": "/myip_pwm_4",
+                "SX": "/myip_pwm_left_wheel",
                 "SI": "S00_AXI",
                 "SS": "S00_AXI_reg",
                 "SV": "user.org:user:myip_pwm:1.0",
@@ -370,24 +370,6 @@
                 "TU": "register"
             },
             "V13": {
-                "VT": "AC",
-                "BA": "0x44A50000",
-                "HA": "0x44A5FFFF",
-                "BP": "C_S00_AXI_BASEADDR",
-                "HP": "C_S00_AXI_HIGHADDR",
-                "MA": "Data",
-                "MX": "/microblaze_riscv_0",
-                "MI": "M_AXI_DP",
-                "MS": "SEG_myip_pwm_5_S00_AXI_reg",
-                "MV": "xilinx.com:ip:microblaze_riscv:1.0",
-                "SX": "/myip_pwm_5",
-                "SI": "S00_AXI",
-                "SS": "S00_AXI_reg",
-                "SV": "user.org:user:myip_pwm:1.0",
-                "TM": "both",
-                "TU": "register"
-            },
-            "V14": {
                 "VT": "AC",
                 "BA": "0x44A60000",
                 "HA": "0x44A6FFFF",
@@ -398,14 +380,14 @@
                 "MI": "M_AXI_DP",
                 "MS": "SEG_myip_pwm_6_S00_AXI_reg",
                 "MV": "xilinx.com:ip:microblaze_riscv:1.0",
-                "SX": "/myip_pwm_6",
+                "SX": "/myip_pwm_blade",
                 "SI": "S00_AXI",
                 "SS": "S00_AXI_reg",
                 "SV": "user.org:user:myip_pwm:1.0",
                 "TM": "both",
                 "TU": "register"
             },
-            "V15": {
+            "V14": {
                 "VT": "AC",
                 "BA": "0x44A70000",
                 "HA": "0x44A7FFFF",
@@ -416,50 +398,14 @@
                 "MI": "M_AXI_DP",
                 "MS": "SEG_myip_pwm_7_S00_AXI_reg",
                 "MV": "xilinx.com:ip:microblaze_riscv:1.0",
-                "SX": "/myip_pwm_7",
+                "SX": "/myip_pwm_right_wheel",
                 "SI": "S00_AXI",
                 "SS": "S00_AXI_reg",
                 "SV": "user.org:user:myip_pwm:1.0",
                 "TM": "both",
                 "TU": "register"
             },
-            "V16": {
-                "VT": "AC",
-                "BA": "0x44A80000",
-                "HA": "0x44A8FFFF",
-                "BP": "C_S00_AXI_BASEADDR",
-                "HP": "C_S00_AXI_HIGHADDR",
-                "MA": "Data",
-                "MX": "/microblaze_riscv_0",
-                "MI": "M_AXI_DP",
-                "MS": "SEG_myip_pwm_8_S00_AXI_reg",
-                "MV": "xilinx.com:ip:microblaze_riscv:1.0",
-                "SX": "/myip_pwm_8",
-                "SI": "S00_AXI",
-                "SS": "S00_AXI_reg",
-                "SV": "user.org:user:myip_pwm:1.0",
-                "TM": "both",
-                "TU": "register"
-            },
-            "V17": {
-                "VT": "AC",
-                "BA": "0x44A90000",
-                "HA": "0x44A9FFFF",
-                "BP": "C_S00_AXI_BASEADDR",
-                "HP": "C_S00_AXI_HIGHADDR",
-                "MA": "Data",
-                "MX": "/microblaze_riscv_0",
-                "MI": "M_AXI_DP",
-                "MS": "SEG_myip_pwm_9_S00_AXI_reg",
-                "MV": "xilinx.com:ip:microblaze_riscv:1.0",
-                "SX": "/myip_pwm_9",
-                "SI": "S00_AXI",
-                "SS": "S00_AXI_reg",
-                "SV": "user.org:user:myip_pwm:1.0",
-                "TM": "both",
-                "TU": "register"
-            },
-            "V18": {
+            "V15": {
                 "VT": "AC",
                 "BA": "0x44AA0000",
                 "HA": "0x44AAFFFF",
@@ -549,21 +495,6 @@
             },
             {
                 "src": "V15",
-                "trg": "V2",
-                "EH": "2"
-            },
-            {
-                "src": "V16",
-                "trg": "V2",
-                "EH": "2"
-            },
-            {
-                "src": "V17",
-                "trg": "V2",
-                "EH": "2"
-            },
-            {
-                "src": "V18",
                 "trg": "V2",
                 "EH": "2"
             }

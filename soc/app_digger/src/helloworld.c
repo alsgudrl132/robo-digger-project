@@ -8,13 +8,13 @@
 #define HC05_UART_DEVICE_ID XPAR_XUARTLITE_0_BASEADDR
 #define USB_UART_BASEADDR   XPAR_XUARTLITE_1_BASEADDR
 #define HANDLE_ADDR         XPAR_MYIP_HANDLE_0_BASEADDR
-#define PWM_0_ADDR XPAR_MYIP_PWM_0_BASEADDR  // X1용
-#define PWM_1_ADDR XPAR_MYIP_PWM_1_BASEADDR  // Y1용
-#define PWM_2_ADDR XPAR_MYIP_PWM_2_BASEADDR  // X2용  
-#define PWM_3_ADDR XPAR_MYIP_PWM_3_BASEADDR  // Y2용
-#define PWM_4_ADDR XPAR_MYIP_PWM_4_BASEADDR  // 블레이드
-#define PWM_5_ADDR XPAR_MYIP_PWM_5_BASEADDR  // 왼쪽바퀴
-#define PWM_6_ADDR XPAR_MYIP_PWM_6_BASEADDR  // 오른쪽바퀴
+#define PWM_0_ADDR XPAR_MYIP_PWM_X1_BASEADDR  // X1용 1
+#define PWM_1_ADDR XPAR_MYIP_PWM_Y1_BASEADDR  // Y1용 1
+#define PWM_2_ADDR XPAR_MYIP_PWM_X2_BASEADDR  // X2용  
+#define PWM_3_ADDR XPAR_MYIP_PWM_Y2_BASEADDR  // Y2용
+#define PWM_4_ADDR XPAR_MYIP_PWM_BLADE_BASEADDR  // 블레이드
+#define PWM_5_ADDR XPAR_MYIP_PWM_LEFT_WHEEL_BASEADDR  // 왼쪽바퀴
+#define PWM_6_ADDR XPAR_MYIP_PWM_RIGHT_WHEEL_BASEADDR  // 오른쪽바퀴
 
 #define SYS_CLK_FREQ  100000000  
 #define REG_DUTY      0x0                   
@@ -153,10 +153,10 @@ void move_servo_smooth_x1(int joystick_val) {
     
     // 부드러운 각도 변화 (한 번에 최대 2도)
     if (x1_angle < target_angle) {
-        x1_angle += 1;
+        x1_angle += 5;
         if (x1_angle > target_angle) x1_angle = target_angle;
     } else if (x1_angle > target_angle) {
-        x1_angle -= 1;
+        x1_angle -= 5;
         if (x1_angle < target_angle) x1_angle = target_angle;
     }
     
@@ -186,10 +186,10 @@ void move_servo_smooth_y1(int joystick_val) {
     if (target_angle > 180) target_angle = 180;
     
     if (y1_angle < target_angle) {
-        y1_angle += 1;
+        y1_angle += 5;
         if (y1_angle > target_angle) y1_angle = target_angle;
     } else if (y1_angle > target_angle) {
-        y1_angle -= 1;
+        y1_angle -= 5;
         if (y1_angle < target_angle) y1_angle = target_angle;
     }
     
@@ -219,10 +219,10 @@ void move_servo_smooth_x2(int joystick_val) {
     if (target_angle > 180) target_angle = 180;
     
     if (x2_angle < target_angle) {
-        x2_angle += 1;
+        x2_angle += 5;
         if (x2_angle > target_angle) x2_angle = target_angle;
     } else if (x2_angle > target_angle) {
-        x2_angle -= 1;
+        x2_angle -= 5;
         if (x2_angle < target_angle) x2_angle = target_angle;
     }
     
@@ -251,10 +251,10 @@ void move_servo_smooth_y2(int joystick_val) {
     if (target_angle > 180) target_angle = 180;
     
     if (y2_angle < target_angle) {
-        y2_angle += 1;
+        y2_angle += 5;
         if (y2_angle > target_angle) y2_angle = target_angle;
     } else if (y2_angle > target_angle) {
-        y2_angle -= 1;
+        y2_angle -= 5;
         if (y2_angle < target_angle) y2_angle = target_angle;
     }
     

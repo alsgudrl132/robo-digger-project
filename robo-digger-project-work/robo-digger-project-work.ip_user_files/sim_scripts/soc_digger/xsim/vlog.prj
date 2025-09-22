@@ -13,14 +13,11 @@ verilog xil_defaultlib --include "/tools/Xilinx/Vivado/2024.2/data/xilinx_vip/in
 "../../../bd/soc_digger/ip/soc_digger_myip_pwm_0_2/sim/soc_digger_myip_pwm_0_2.v" \
 "../../../bd/soc_digger/ip/soc_digger_myip_pwm_0_3/sim/soc_digger_myip_pwm_0_3.v" \
 "../../../bd/soc_digger/ip/soc_digger_myip_pwm_0_4/sim/soc_digger_myip_pwm_0_4.v" \
-"../../../bd/soc_digger/ip/soc_digger_myip_pwm_0_5/sim/soc_digger_myip_pwm_0_5.v" \
 "../../../bd/soc_digger/ip/soc_digger_myip_pwm_0_6/sim/soc_digger_myip_pwm_0_6.v" \
 "../../../bd/soc_digger/ip/soc_digger_myip_pwm_0_7/sim/soc_digger_myip_pwm_0_7.v" \
-"../../../bd/soc_digger/ip/soc_digger_myip_pwm_0_8/sim/soc_digger_myip_pwm_0_8.v" \
-"../../../bd/soc_digger/ip/soc_digger_myip_pwm_0_9/sim/soc_digger_myip_pwm_0_9.v" \
-"../../../bd/soc_digger/ipshared/6b62/hdl/myip_handle_slave_lite_v1_0_S00_AXI.v" \
-"../../../bd/soc_digger/ipshared/6b62/src/controller.v" \
-"../../../bd/soc_digger/ipshared/6b62/hdl/myip_handle.v" \
+"../../../bd/soc_digger/ipshared/5e2c/hdl/myip_handle_slave_lite_v1_0_S00_AXI.v" \
+"../../../bd/soc_digger/ipshared/5e2c/src/controller.v" \
+"../../../bd/soc_digger/ipshared/5e2c/hdl/myip_handle.v" \
 "../../../bd/soc_digger/ip/soc_digger_myip_handle_0_0/sim/soc_digger_myip_handle_0_0.v" \
 "../../../bd/soc_digger/sim/soc_digger.v" \
 

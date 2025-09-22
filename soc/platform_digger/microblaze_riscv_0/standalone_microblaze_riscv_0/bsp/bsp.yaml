@@ -164,16 +164,13 @@ drv_info:
     ip_name: axi_intc
     path: /tools/Xilinx/Vitis/2024.2/data/embeddedsw/XilinxProcessorIPLib/drivers/intc_v3_19
   myip_handle_0: None
-  myip_pwm_0: None
-  myip_pwm_1: None
-  myip_pwm_2: None
-  myip_pwm_3: None
-  myip_pwm_4: None
-  myip_pwm_5: None
-  myip_pwm_6: None
-  myip_pwm_7: None
-  myip_pwm_8: None
-  myip_pwm_9: None
+  myip_pwm_blade: None
+  myip_pwm_left_wheel: None
+  myip_pwm_right_wheel: None
+  myip_pwm_x1: None
+  myip_pwm_x2: None
+  myip_pwm_y1: None
+  myip_pwm_y2: None
 lib_info:
   xiltimer:
     path: /tools/Xilinx/Vitis/2024.2/data/embeddedsw/lib/sw_services/xiltimer_v2_1

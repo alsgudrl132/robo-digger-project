@@ -1,7 +1,7 @@
 {
   "design": {
     "design_info": {
-      "boundary_crc": "0xAF6C6DA64D49D085",
+      "boundary_crc": "0xEE479E1EB60DF158",
       "device": "xc7a35tcpg236-1",
       "gen_directory": "../../../../robo-digger-project-work.gen/sources_1/bd/soc_digger",
       "name": "soc_digger",
@@ -44,16 +44,13 @@
       "mdm_1": "",
       "axi_usb_uart": "",
       "axi_hc05_uart": "",
-      "myip_pwm_0": "",
-      "myip_pwm_1": "",
-      "myip_pwm_2": "",
-      "myip_pwm_3": "",
-      "myip_pwm_4": "",
-      "myip_pwm_5": "",
-      "myip_pwm_6": "",
-      "myip_pwm_7": "",
-      "myip_pwm_8": "",
-      "myip_pwm_9": "",
+      "myip_pwm_x1": "",
+      "myip_pwm_y1": "",
+      "myip_pwm_x2": "",
+      "myip_pwm_y2": "",
+      "myip_pwm_left_wheel": "",
+      "myip_pwm_blade": "",
+      "myip_pwm_right_wheel": "",
       "myip_handle_0": ""
     },
     "interface_ports": {
@@ -122,6 +119,11 @@
       "tx_0": {
         "direction": "O"
       },
+      "motor_control_0": {
+        "direction": "O",
+        "left": "3",
+        "right": "0"
+      },
       "pwm_0": {
         "direction": "O"
       },
@@ -142,20 +144,6 @@
       },
       "pwm_6": {
         "direction": "O"
-      },
-      "pwm_7": {
-        "direction": "O"
-      },
-      "pwm_8": {
-        "direction": "O"
-      },
-      "pwm_9": {
-        "direction": "O"
-      },
-      "motor_control_0": {
-        "direction": "O",
-        "left": "3",
-        "right": "0"
       }
     },
     "components": {
@@ -1981,79 +1969,58 @@
           }
         }
       },
-      "myip_pwm_0": {
+      "myip_pwm_x1": {
         "vlnv": "user.org:user:myip_pwm:1.0",
         "ip_revision": "3",
         "xci_name": "soc_digger_myip_pwm_0_0",
         "xci_path": "ip/soc_digger_myip_pwm_0_0/soc_digger_myip_pwm_0_0.xci",
-        "inst_hier_path": "myip_pwm_0"
+        "inst_hier_path": "myip_pwm_x1"
       },
-      "myip_pwm_1": {
+      "myip_pwm_y1": {
         "vlnv": "user.org:user:myip_pwm:1.0",
         "ip_revision": "3",
         "xci_name": "soc_digger_myip_pwm_0_1",
         "xci_path": "ip/soc_digger_myip_pwm_0_1/soc_digger_myip_pwm_0_1.xci",
-        "inst_hier_path": "myip_pwm_1"
+        "inst_hier_path": "myip_pwm_y1"
       },
-      "myip_pwm_2": {
+      "myip_pwm_x2": {
         "vlnv": "user.org:user:myip_pwm:1.0",
         "ip_revision": "3",
         "xci_name": "soc_digger_myip_pwm_0_2",
         "xci_path": "ip/soc_digger_myip_pwm_0_2/soc_digger_myip_pwm_0_2.xci",
-        "inst_hier_path": "myip_pwm_2"
+        "inst_hier_path": "myip_pwm_x2"
       },
-      "myip_pwm_3": {
+      "myip_pwm_y2": {
         "vlnv": "user.org:user:myip_pwm:1.0",
         "ip_revision": "3",
         "xci_name": "soc_digger_myip_pwm_0_3",
         "xci_path": "ip/soc_digger_myip_pwm_0_3/soc_digger_myip_pwm_0_3.xci",
-        "inst_hier_path": "myip_pwm_3"
+        "inst_hier_path": "myip_pwm_y2"
       },
-      "myip_pwm_4": {
+      "myip_pwm_left_wheel": {
         "vlnv": "user.org:user:myip_pwm:1.0",
         "ip_revision": "3",
         "xci_name": "soc_digger_myip_pwm_0_4",
         "xci_path": "ip/soc_digger_myip_pwm_0_4/soc_digger_myip_pwm_0_4.xci",
-        "inst_hier_path": "myip_pwm_4"
+        "inst_hier_path": "myip_pwm_left_wheel"
       },
-      "myip_pwm_5": {
-        "vlnv": "user.org:user:myip_pwm:1.0",
-        "ip_revision": "3",
-        "xci_name": "soc_digger_myip_pwm_0_5",
-        "xci_path": "ip/soc_digger_myip_pwm_0_5/soc_digger_myip_pwm_0_5.xci",
-        "inst_hier_path": "myip_pwm_5"
-      },
-      "myip_pwm_6": {
+      "myip_pwm_blade": {
         "vlnv": "user.org:user:myip_pwm:1.0",
         "ip_revision": "3",
         "xci_name": "soc_digger_myip_pwm_0_6",
         "xci_path": "ip/soc_digger_myip_pwm_0_6/soc_digger_myip_pwm_0_6.xci",
-        "inst_hier_path": "myip_pwm_6"
+        "inst_hier_path": "myip_pwm_blade"
       },
-      "myip_pwm_7": {
+      "myip_pwm_right_wheel": {
         "vlnv": "user.org:user:myip_pwm:1.0",
         "ip_revision": "3",
         "xci_name": "soc_digger_myip_pwm_0_7",
         "xci_path": "ip/soc_digger_myip_pwm_0_7/soc_digger_myip_pwm_0_7.xci",
-        "inst_hier_path": "myip_pwm_7"
-      },
-      "myip_pwm_8": {
-        "vlnv": "user.org:user:myip_pwm:1.0",
-        "ip_revision": "3",
-        "xci_name": "soc_digger_myip_pwm_0_8",
-        "xci_path": "ip/soc_digger_myip_pwm_0_8/soc_digger_myip_pwm_0_8.xci",
-        "inst_hier_path": "myip_pwm_8"
-      },
-      "myip_pwm_9": {
-        "vlnv": "user.org:user:myip_pwm:1.0",
-        "ip_revision": "3",
-        "xci_name": "soc_digger_myip_pwm_0_9",
-        "xci_path": "ip/soc_digger_myip_pwm_0_9/soc_digger_myip_pwm_0_9.xci",
-        "inst_hier_path": "myip_pwm_9"
+        "inst_hier_path": "myip_pwm_right_wheel"
       },
       "myip_handle_0": {
         "vlnv": "user.org:user:myip_handle:1.0",
-        "ip_revision": "3",
+        "ip_revision": "6",
         "xci_name": "soc_digger_myip_handle_0_0",
         "xci_path": "ip/soc_digger_myip_handle_0_0/soc_digger_myip_handle_0_0.xci",
         "inst_hier_path": "myip_handle_0"
@@ -2093,61 +2060,43 @@
       "microblaze_riscv_0_axi_periph_M03_AXI": {
         "interface_ports": [
           "microblaze_riscv_0_axi_periph/M03_AXI",
-          "myip_pwm_0/S00_AXI"
+          "myip_pwm_x1/S00_AXI"
         ]
       },
       "microblaze_riscv_0_axi_periph_M04_AXI": {
         "interface_ports": [
           "microblaze_riscv_0_axi_periph/M04_AXI",
-          "myip_pwm_1/S00_AXI"
+          "myip_pwm_y1/S00_AXI"
         ]
       },
       "microblaze_riscv_0_axi_periph_M05_AXI": {
         "interface_ports": [
           "microblaze_riscv_0_axi_periph/M05_AXI",
-          "myip_pwm_2/S00_AXI"
+          "myip_pwm_x2/S00_AXI"
         ]
       },
       "microblaze_riscv_0_axi_periph_M06_AXI": {
         "interface_ports": [
           "microblaze_riscv_0_axi_periph/M06_AXI",
-          "myip_pwm_3/S00_AXI"
+          "myip_pwm_y2/S00_AXI"
         ]
       },
       "microblaze_riscv_0_axi_periph_M07_AXI": {
         "interface_ports": [
           "microblaze_riscv_0_axi_periph/M07_AXI",
-          "myip_pwm_4/S00_AXI"
-        ]
-      },
-      "microblaze_riscv_0_axi_periph_M08_AXI": {
-        "interface_ports": [
-          "microblaze_riscv_0_axi_periph/M08_AXI",
-          "myip_pwm_5/S00_AXI"
+          "myip_pwm_left_wheel/S00_AXI"
         ]
       },
       "microblaze_riscv_0_axi_periph_M09_AXI": {
         "interface_ports": [
           "microblaze_riscv_0_axi_periph/M09_AXI",
-          "myip_pwm_6/S00_AXI"
+          "myip_pwm_blade/S00_AXI"
         ]
       },
       "microblaze_riscv_0_axi_periph_M10_AXI": {
         "interface_ports": [
           "microblaze_riscv_0_axi_periph/M10_AXI",
-          "myip_pwm_7/S00_AXI"
-        ]
-      },
-      "microblaze_riscv_0_axi_periph_M11_AXI": {
-        "interface_ports": [
-          "microblaze_riscv_0_axi_periph/M11_AXI",
-          "myip_pwm_8/S00_AXI"
-        ]
-      },
-      "microblaze_riscv_0_axi_periph_M12_AXI": {
-        "interface_ports": [
-          "microblaze_riscv_0_axi_periph/M12_AXI",
-          "myip_pwm_9/S00_AXI"
+          "myip_pwm_right_wheel/S00_AXI"
         ]
       },
       "microblaze_riscv_0_axi_periph_M13_AXI": {
@@ -2221,25 +2170,22 @@
           "microblaze_riscv_0_axi_periph/M01_ACLK",
           "axi_hc05_uart/s_axi_aclk",
           "microblaze_riscv_0_axi_periph/M02_ACLK",
-          "myip_pwm_0/s00_axi_aclk",
+          "myip_pwm_x1/s00_axi_aclk",
           "microblaze_riscv_0_axi_periph/M03_ACLK",
-          "myip_pwm_1/s00_axi_aclk",
+          "myip_pwm_y1/s00_axi_aclk",
           "microblaze_riscv_0_axi_periph/M04_ACLK",
-          "myip_pwm_2/s00_axi_aclk",
+          "myip_pwm_x2/s00_axi_aclk",
           "microblaze_riscv_0_axi_periph/M05_ACLK",
-          "myip_pwm_3/s00_axi_aclk",
+          "myip_pwm_y2/s00_axi_aclk",
           "microblaze_riscv_0_axi_periph/M06_ACLK",
-          "myip_pwm_4/s00_axi_aclk",
+          "myip_pwm_left_wheel/s00_axi_aclk",
           "microblaze_riscv_0_axi_periph/M07_ACLK",
-          "myip_pwm_5/s00_axi_aclk",
           "microblaze_riscv_0_axi_periph/M08_ACLK",
-          "myip_pwm_6/s00_axi_aclk",
+          "myip_pwm_blade/s00_axi_aclk",
           "microblaze_riscv_0_axi_periph/M09_ACLK",
-          "myip_pwm_7/s00_axi_aclk",
+          "myip_pwm_right_wheel/s00_axi_aclk",
           "microblaze_riscv_0_axi_periph/M10_ACLK",
-          "myip_pwm_8/s00_axi_aclk",
           "microblaze_riscv_0_axi_periph/M11_ACLK",
-          "myip_pwm_9/s00_axi_aclk",
           "microblaze_riscv_0_axi_periph/M12_ACLK",
           "microblaze_riscv_0_axi_periph/M13_ACLK",
           "myip_handle_0/s00_axi_aclk"
@@ -2257,64 +2203,46 @@
           "motor_control_0"
         ]
       },
-      "myip_pwm_0_pwm": {
+      "myip_pwm_blade_pwm": {
         "ports": [
-          "myip_pwm_0/pwm",
-          "pwm_0"
-        ]
-      },
-      "myip_pwm_1_pwm": {
-        "ports": [
-          "myip_pwm_1/pwm",
-          "pwm_1"
-        ]
-      },
-      "myip_pwm_2_pwm": {
-        "ports": [
-          "myip_pwm_2/pwm",
-          "pwm_5"
-        ]
-      },
-      "myip_pwm_3_pwm": {
-        "ports": [
-          "myip_pwm_3/pwm",
-          "pwm_6"
-        ]
-      },
-      "myip_pwm_4_pwm": {
-        "ports": [
-          "myip_pwm_4/pwm",
-          "pwm_7"
-        ]
-      },
-      "myip_pwm_5_pwm": {
-        "ports": [
-          "myip_pwm_5/pwm",
-          "pwm_8"
-        ]
-      },
-      "myip_pwm_6_pwm": {
-        "ports": [
-          "myip_pwm_6/pwm",
-          "pwm_2"
-        ]
-      },
-      "myip_pwm_7_pwm": {
-        "ports": [
-          "myip_pwm_7/pwm",
-          "pwm_3"
-        ]
-      },
-      "myip_pwm_8_pwm": {
-        "ports": [
-          "myip_pwm_8/pwm",
+          "myip_pwm_blade/pwm",
           "pwm_4"
         ]
       },
-      "myip_pwm_9_pwm": {
+      "myip_pwm_left_wheel_pwm": {
         "ports": [
-          "myip_pwm_9/pwm",
-          "pwm_9"
+          "myip_pwm_left_wheel/pwm",
+          "pwm_5"
+        ]
+      },
+      "myip_pwm_right_wheel_pwm": {
+        "ports": [
+          "myip_pwm_right_wheel/pwm",
+          "pwm_6"
+        ]
+      },
+      "myip_pwm_x1_pwm": {
+        "ports": [
+          "myip_pwm_x1/pwm",
+          "pwm_0"
+        ]
+      },
+      "myip_pwm_x2_pwm": {
+        "ports": [
+          "myip_pwm_x2/pwm",
+          "pwm_2"
+        ]
+      },
+      "myip_pwm_y1_pwm": {
+        "ports": [
+          "myip_pwm_y1/pwm",
+          "pwm_1"
+        ]
+      },
+      "myip_pwm_y2_pwm": {
+        "ports": [
+          "myip_pwm_y2/pwm",
+          "pwm_3"
         ]
       },
       "proc_sys_reset_0_bus_struct_reset": {
@@ -2341,25 +2269,22 @@
           "microblaze_riscv_0_axi_periph/M01_ARESETN",
           "axi_hc05_uart/s_axi_aresetn",
           "microblaze_riscv_0_axi_periph/M02_ARESETN",
-          "myip_pwm_0/s00_axi_aresetn",
+          "myip_pwm_x1/s00_axi_aresetn",
           "microblaze_riscv_0_axi_periph/M03_ARESETN",
-          "myip_pwm_1/s00_axi_aresetn",
+          "myip_pwm_y1/s00_axi_aresetn",
           "microblaze_riscv_0_axi_periph/M04_ARESETN",
-          "myip_pwm_2/s00_axi_aresetn",
+          "myip_pwm_x2/s00_axi_aresetn",
           "microblaze_riscv_0_axi_periph/M05_ARESETN",
-          "myip_pwm_3/s00_axi_aresetn",
+          "myip_pwm_y2/s00_axi_aresetn",
           "microblaze_riscv_0_axi_periph/M06_ARESETN",
-          "myip_pwm_4/s00_axi_aresetn",
+          "myip_pwm_left_wheel/s00_axi_aresetn",
           "microblaze_riscv_0_axi_periph/M07_ARESETN",
-          "myip_pwm_5/s00_axi_aresetn",
           "microblaze_riscv_0_axi_periph/M08_ARESETN",
-          "myip_pwm_6/s00_axi_aresetn",
+          "myip_pwm_blade/s00_axi_aresetn",
           "microblaze_riscv_0_axi_periph/M09_ARESETN",
-          "myip_pwm_7/s00_axi_aresetn",
+          "myip_pwm_right_wheel/s00_axi_aresetn",
           "microblaze_riscv_0_axi_periph/M10_ARESETN",
-          "myip_pwm_8/s00_axi_aresetn",
           "microblaze_riscv_0_axi_periph/M11_ARESETN",
-          "myip_pwm_9/s00_axi_aresetn",
           "microblaze_riscv_0_axi_periph/M12_ARESETN",
           "microblaze_riscv_0_axi_periph/M13_ARESETN",
           "myip_handle_0/s00_axi_aresetn"
@@ -2419,71 +2344,50 @@
                 "offset_high_param": "C_S00_AXI_HIGHADDR"
               },
               "SEG_myip_pwm_0_S00_AXI_reg": {
-                "address_block": "/myip_pwm_0/S00_AXI/S00_AXI_reg",
+                "address_block": "/myip_pwm_x1/S00_AXI/S00_AXI_reg",
                 "offset": "0x44A00000",
                 "range": "64K",
                 "offset_base_param": "C_S00_AXI_BASEADDR",
                 "offset_high_param": "C_S00_AXI_HIGHADDR"
               },
               "SEG_myip_pwm_1_S00_AXI_reg": {
-                "address_block": "/myip_pwm_1/S00_AXI/S00_AXI_reg",
+                "address_block": "/myip_pwm_y1/S00_AXI/S00_AXI_reg",
                 "offset": "0x44A10000",
                 "range": "64K",
                 "offset_base_param": "C_S00_AXI_BASEADDR",
                 "offset_high_param": "C_S00_AXI_HIGHADDR"
               },
               "SEG_myip_pwm_2_S00_AXI_reg": {
-                "address_block": "/myip_pwm_2/S00_AXI/S00_AXI_reg",
+                "address_block": "/myip_pwm_x2/S00_AXI/S00_AXI_reg",
                 "offset": "0x44A20000",
                 "range": "64K",
                 "offset_base_param": "C_S00_AXI_BASEADDR",
                 "offset_high_param": "C_S00_AXI_HIGHADDR"
               },
               "SEG_myip_pwm_3_S00_AXI_reg": {
-                "address_block": "/myip_pwm_3/S00_AXI/S00_AXI_reg",
+                "address_block": "/myip_pwm_y2/S00_AXI/S00_AXI_reg",
                 "offset": "0x44A30000",
                 "range": "64K",
                 "offset_base_param": "C_S00_AXI_BASEADDR",
                 "offset_high_param": "C_S00_AXI_HIGHADDR"
               },
               "SEG_myip_pwm_4_S00_AXI_reg": {
-                "address_block": "/myip_pwm_4/S00_AXI/S00_AXI_reg",
+                "address_block": "/myip_pwm_left_wheel/S00_AXI/S00_AXI_reg",
                 "offset": "0x44A40000",
                 "range": "64K",
                 "offset_base_param": "C_S00_AXI_BASEADDR",
                 "offset_high_param": "C_S00_AXI_HIGHADDR"
               },
-              "SEG_myip_pwm_5_S00_AXI_reg": {
-                "address_block": "/myip_pwm_5/S00_AXI/S00_AXI_reg",
-                "offset": "0x44A50000",
-                "range": "64K",
-                "offset_base_param": "C_S00_AXI_BASEADDR",
-                "offset_high_param": "C_S00_AXI_HIGHADDR"
-              },
               "SEG_myip_pwm_6_S00_AXI_reg": {
-                "address_block": "/myip_pwm_6/S00_AXI/S00_AXI_reg",
+                "address_block": "/myip_pwm_blade/S00_AXI/S00_AXI_reg",
                 "offset": "0x44A60000",
                 "range": "64K",
                 "offset_base_param": "C_S00_AXI_BASEADDR",
                 "offset_high_param": "C_S00_AXI_HIGHADDR"
               },
               "SEG_myip_pwm_7_S00_AXI_reg": {
-                "address_block": "/myip_pwm_7/S00_AXI/S00_AXI_reg",
+                "address_block": "/myip_pwm_right_wheel/S00_AXI/S00_AXI_reg",
                 "offset": "0x44A70000",
-                "range": "64K",
-                "offset_base_param": "C_S00_AXI_BASEADDR",
-                "offset_high_param": "C_S00_AXI_HIGHADDR"
-              },
-              "SEG_myip_pwm_8_S00_AXI_reg": {
-                "address_block": "/myip_pwm_8/S00_AXI/S00_AXI_reg",
-                "offset": "0x44A80000",
-                "range": "64K",
-                "offset_base_param": "C_S00_AXI_BASEADDR",
-                "offset_high_param": "C_S00_AXI_HIGHADDR"
-              },
-              "SEG_myip_pwm_9_S00_AXI_reg": {
-                "address_block": "/myip_pwm_9/S00_AXI/S00_AXI_reg",
-                "offset": "0x44A90000",
                 "range": "64K",
                 "offset_base_param": "C_S00_AXI_BASEADDR",
                 "offset_high_param": "C_S00_AXI_HIGHADDR"
@@ -2501,6 +2405,21 @@
             }
           }
         }
+      }
+    },
+    "elf_association": {
+      "file": {
+        "name": "../../imports/build/app_digger.elf",
+        "type": "ELF",
+        "checksum": "1274408331",
+        "IsVisible": "1",
+        "ScopedToRef": "soc_digger",
+        "ScopedToCell": [
+          "microblaze_riscv_0"
+        ],
+        "UsedIn": [
+          "implementation"
+        ]
       }
     }
   }
