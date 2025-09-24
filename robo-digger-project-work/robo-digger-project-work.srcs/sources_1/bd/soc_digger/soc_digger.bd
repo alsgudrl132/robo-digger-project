@@ -2409,9 +2409,9 @@
     },
     "elf_association": {
       "file": {
-        "name": "../../imports/build/app_digger.elf",
+        "name": "../../../../../soc/app_digger/build/app_digger.elf",
         "type": "ELF",
-        "checksum": "1274408331",
+        "checksum": "1335014860",
         "IsVisible": "1",
         "ScopedToRef": "soc_digger",
         "ScopedToCell": [

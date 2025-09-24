@@ -228,6 +228,12 @@
           <Attr Name="ImportPath" Val="$PPRDIR/../soc/app_digger/build/app_digger.elf"/>
           <Attr Name="ImportTime" Val="1758502729"/>
           <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="IsVisible" Val="1"/>
+        </FileInfo>
+      </File>
+      <File Path="$PPRDIR/../soc/app_digger/build/app_digger.elf">
+        <FileInfo RelPath="app_digger.elf">
+          <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="ScopedToRef" Val="soc_digger"/>
           <Attr Name="ScopedToCell" Val="microblaze_riscv_0"/>
           <Attr Name="IsVisible" Val="1"/>
