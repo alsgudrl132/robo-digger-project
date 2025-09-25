@@ -1,4 +1,4 @@
-# Install script for directory: /home/user11/robo-digger-project/soc/platform_lcd_jy/microblaze_riscv_0/standalone_microblaze_riscv_0/bsp/libsrc/xiltimer/src/core/default_timer
+# Install script for directory: /home/min/robo-digger-project/soc/platform_lcd_jy/microblaze_riscv_0/standalone_microblaze_riscv_0/bsp/libsrc/xiltimer/src/core/default_timer
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -34,6 +34,6 @@ endif()
 
 # Set default install directory permissions.
 if(NOT DEFINED CMAKE_OBJDUMP)
-  set(CMAKE_OBJDUMP "/home/user11/tools/Vitis/2024.2/gnu/riscv/lin/riscv64-unknown-elf/bin/riscv64-unknown-elf-objdump")
+  set(CMAKE_OBJDUMP "/tools/Xilinx/Vitis/2024.2/gnu/riscv/lin/riscv64-unknown-elf/bin/riscv64-unknown-elf-objdump")
 endif()
 

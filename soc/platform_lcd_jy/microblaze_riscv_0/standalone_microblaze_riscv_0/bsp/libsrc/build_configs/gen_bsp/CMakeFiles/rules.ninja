@@ -25,7 +25,7 @@ rule CUSTOM_COMMAND
 rule C_COMPILER__iic_
   depfile = $DEP_FILE
   deps = gcc
-  command = /home/user11/tools/Vitis/2024.2/gnu/riscv/lin/riscv64-unknown-elf/bin/riscv64-unknown-elf-gcc $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  command = /tools/Xilinx/Vitis/2024.2/gnu/riscv/lin/riscv64-unknown-elf/bin/riscv64-unknown-elf-gcc $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
   description = Building C object $out
 
 
@@ -33,7 +33,7 @@ rule C_COMPILER__iic_
 # Rule for linking C static library.
 
 rule C_STATIC_LIBRARY_LINKER__iic_
-  command = $PRE_LINK && /home/user11/tools/Vitis/2024.2/tps/lnx64/cmake-3.24.2/bin/cmake -E rm -f $TARGET_FILE && riscv64-unknown-elf-ar qc $TARGET_FILE $LINK_FLAGS $in && /home/user11/tools/Vitis/2024.2/gnu/riscv/lin/riscv64-unknown-elf/bin/riscv64-unknown-elf-ranlib $TARGET_FILE && $POST_BUILD
+  command = $PRE_LINK && /tools/Xilinx/Vitis/2024.2/tps/lnx64/cmake-3.24.2/bin/cmake -E rm -f $TARGET_FILE && riscv64-unknown-elf-ar qc $TARGET_FILE $LINK_FLAGS $in && /tools/Xilinx/Vitis/2024.2/gnu/riscv/lin/riscv64-unknown-elf/bin/riscv64-unknown-elf-ranlib $TARGET_FILE && $POST_BUILD
   description = Linking C static library $TARGET_FILE
   restat = $RESTAT
 
@@ -44,7 +44,7 @@ rule C_STATIC_LIBRARY_LINKER__iic_
 rule C_COMPILER__uartlite_
   depfile = $DEP_FILE
   deps = gcc
-  command = /home/user11/tools/Vitis/2024.2/gnu/riscv/lin/riscv64-unknown-elf/bin/riscv64-unknown-elf-gcc $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  command = /tools/Xilinx/Vitis/2024.2/gnu/riscv/lin/riscv64-unknown-elf/bin/riscv64-unknown-elf-gcc $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
   description = Building C object $out
 
 
@@ -52,7 +52,7 @@ rule C_COMPILER__uartlite_
 # Rule for linking C static library.
 
 rule C_STATIC_LIBRARY_LINKER__uartlite_
-  command = $PRE_LINK && /home/user11/tools/Vitis/2024.2/tps/lnx64/cmake-3.24.2/bin/cmake -E rm -f $TARGET_FILE && riscv64-unknown-elf-ar qc $TARGET_FILE $LINK_FLAGS $in && /home/user11/tools/Vitis/2024.2/gnu/riscv/lin/riscv64-unknown-elf/bin/riscv64-unknown-elf-ranlib $TARGET_FILE && $POST_BUILD
+  command = $PRE_LINK && /tools/Xilinx/Vitis/2024.2/tps/lnx64/cmake-3.24.2/bin/cmake -E rm -f $TARGET_FILE && riscv64-unknown-elf-ar qc $TARGET_FILE $LINK_FLAGS $in && /tools/Xilinx/Vitis/2024.2/gnu/riscv/lin/riscv64-unknown-elf/bin/riscv64-unknown-elf-ranlib $TARGET_FILE && $POST_BUILD
   description = Linking C static library $TARGET_FILE
   restat = $RESTAT
 
@@ -63,7 +63,7 @@ rule C_STATIC_LIBRARY_LINKER__uartlite_
 rule ASM_COMPILER__xilstandalone_
   depfile = $DEP_FILE
   deps = gcc
-  command = /home/user11/tools/Vitis/2024.2/gnu/riscv/lin/riscv64-unknown-elf/bin/riscv64-unknown-elf-gcc $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  command = /tools/Xilinx/Vitis/2024.2/gnu/riscv/lin/riscv64-unknown-elf/bin/riscv64-unknown-elf-gcc $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
   description = Building ASM object $out
 
 
@@ -73,7 +73,7 @@ rule ASM_COMPILER__xilstandalone_
 rule C_COMPILER__xilstandalone_
   depfile = $DEP_FILE
   deps = gcc
-  command = /home/user11/tools/Vitis/2024.2/gnu/riscv/lin/riscv64-unknown-elf/bin/riscv64-unknown-elf-gcc $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  command = /tools/Xilinx/Vitis/2024.2/gnu/riscv/lin/riscv64-unknown-elf/bin/riscv64-unknown-elf-gcc $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
   description = Building C object $out
 
 
@@ -81,7 +81,7 @@ rule C_COMPILER__xilstandalone_
 # Rule for linking C static library.
 
 rule C_STATIC_LIBRARY_LINKER__xilstandalone_
-  command = $PRE_LINK && /home/user11/tools/Vitis/2024.2/tps/lnx64/cmake-3.24.2/bin/cmake -E rm -f $TARGET_FILE && riscv64-unknown-elf-ar qc $TARGET_FILE $LINK_FLAGS $in && /home/user11/tools/Vitis/2024.2/gnu/riscv/lin/riscv64-unknown-elf/bin/riscv64-unknown-elf-ranlib $TARGET_FILE && $POST_BUILD
+  command = $PRE_LINK && /tools/Xilinx/Vitis/2024.2/tps/lnx64/cmake-3.24.2/bin/cmake -E rm -f $TARGET_FILE && riscv64-unknown-elf-ar qc $TARGET_FILE $LINK_FLAGS $in && /tools/Xilinx/Vitis/2024.2/gnu/riscv/lin/riscv64-unknown-elf/bin/riscv64-unknown-elf-ranlib $TARGET_FILE && $POST_BUILD
   description = Linking C static library $TARGET_FILE
   restat = $RESTAT
 
@@ -92,7 +92,7 @@ rule C_STATIC_LIBRARY_LINKER__xilstandalone_
 rule C_COMPILER__xiltimer_
   depfile = $DEP_FILE
   deps = gcc
-  command = /home/user11/tools/Vitis/2024.2/gnu/riscv/lin/riscv64-unknown-elf/bin/riscv64-unknown-elf-gcc $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
+  command = /tools/Xilinx/Vitis/2024.2/gnu/riscv/lin/riscv64-unknown-elf/bin/riscv64-unknown-elf-gcc $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
   description = Building C object $out
 
 
@@ -100,7 +100,7 @@ rule C_COMPILER__xiltimer_
 # Rule for linking C static library.
 
 rule C_STATIC_LIBRARY_LINKER__xiltimer_
-  command = $PRE_LINK && /home/user11/tools/Vitis/2024.2/tps/lnx64/cmake-3.24.2/bin/cmake -E rm -f $TARGET_FILE && riscv64-unknown-elf-ar qc $TARGET_FILE $LINK_FLAGS $in && /home/user11/tools/Vitis/2024.2/gnu/riscv/lin/riscv64-unknown-elf/bin/riscv64-unknown-elf-ranlib $TARGET_FILE && $POST_BUILD
+  command = $PRE_LINK && /tools/Xilinx/Vitis/2024.2/tps/lnx64/cmake-3.24.2/bin/cmake -E rm -f $TARGET_FILE && riscv64-unknown-elf-ar qc $TARGET_FILE $LINK_FLAGS $in && /tools/Xilinx/Vitis/2024.2/gnu/riscv/lin/riscv64-unknown-elf/bin/riscv64-unknown-elf-ranlib $TARGET_FILE && $POST_BUILD
   description = Linking C static library $TARGET_FILE
   restat = $RESTAT
 
@@ -109,7 +109,7 @@ rule C_STATIC_LIBRARY_LINKER__xiltimer_
 # Rule for re-running cmake.
 
 rule RERUN_CMAKE
-  command = /home/user11/tools/Vitis/2024.2/tps/lnx64/cmake-3.24.2/bin/cmake --regenerate-during-build -S/home/user11/robo-digger-project/soc/platform_lcd_jy/microblaze_riscv_0/standalone_microblaze_riscv_0/bsp -B/home/user11/robo-digger-project/soc/platform_lcd_jy/microblaze_riscv_0/standalone_microblaze_riscv_0/bsp/libsrc/build_configs/gen_bsp
+  command = /tools/Xilinx/Vitis/2024.2/tps/lnx64/cmake-3.24.2/bin/cmake --regenerate-during-build -S/home/min/robo-digger-project/soc/platform_lcd_jy/microblaze_riscv_0/standalone_microblaze_riscv_0/bsp -B/home/min/robo-digger-project/soc/platform_lcd_jy/microblaze_riscv_0/standalone_microblaze_riscv_0/bsp/libsrc/build_configs/gen_bsp
   description = Re-running CMake...
   generator = 1
 
@@ -118,7 +118,7 @@ rule RERUN_CMAKE
 # Rule for cleaning additional files.
 
 rule CLEAN_ADDITIONAL
-  command = /home/user11/tools/Vitis/2024.2/tps/lnx64/cmake-3.24.2/bin/cmake -DCONFIG=$CONFIG -P CMakeFiles/clean_additional.cmake
+  command = /tools/Xilinx/Vitis/2024.2/tps/lnx64/cmake-3.24.2/bin/cmake -DCONFIG=$CONFIG -P CMakeFiles/clean_additional.cmake
   description = Cleaning additional files...
 
 
@@ -126,7 +126,7 @@ rule CLEAN_ADDITIONAL
 # Rule for cleaning all built files.
 
 rule CLEAN
-  command = /home/user11/tools/Vitis/2024.2/tps/lnx64/lopper-1.1.0/env/bin/ninja $FILE_ARG -t clean $TARGETS
+  command = /tools/Xilinx/Vitis/2024.2/tps/lnx64/lopper-1.1.0/env/bin/ninja $FILE_ARG -t clean $TARGETS
   description = Cleaning all built files...
 
 
@@ -134,6 +134,6 @@ rule CLEAN
 # Rule for printing all primary targets available.
 
 rule HELP
-  command = /home/user11/tools/Vitis/2024.2/tps/lnx64/lopper-1.1.0/env/bin/ninja -t targets
+  command = /tools/Xilinx/Vitis/2024.2/tps/lnx64/lopper-1.1.0/env/bin/ninja -t targets
   description = All primary targets available:
 
