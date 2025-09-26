@@ -92,3 +92,12 @@
 ## 데모 영상
 
 [![시연 영상](https://img.shields.io/badge/YouTube-시연영상-red?style=for-the-badge&logo=youtube)](https://www.youtube.com/shorts/obiy9c_imKA)에서 확인하실 수 있습니다.
+
+### 블레이드 동작
+![블레이드 동작](https://github.com/alsgudrl132/robo-digger-project/issues/1#issue-3455631419)
+
+### DC모터 주행 (바퀴)
+![DC모터 주행](https://github.com/alsgudrl132/robo-digger-project/issues/2#issue-3455631815)
+
+### 서보모터 제어
+![서보모터 제어](https://github.com/alsgudrl132/robo-digger-project/issues/3#issue-3455632651)
