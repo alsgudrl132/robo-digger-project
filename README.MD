@@ -96,8 +96,9 @@
 ### 블레이드 동작
 ![블레이드 동작](https://github.com/user-attachments/assets/cd2b44f1-721e-4e37-be22-ee00acefc270)
 
+### 서보모터 제어
+![서보모터 제어](https://github.com/user-attachments/assets/69b779c8-5c70-423d-8078-a8ada19d6132)\
+
 ### DC모터 주행 (바퀴)  
 ![DC모터 주행](https://github.com/user-attachments/assets/7f3f2aad-d133-4998-a3a9-d8944861fbc2)
 
-### 서보모터 제어
-![서보모터 제어](https://github.com/user-attachments/assets/69b779c8-5c70-423d-8078-a8ada19d6132)
