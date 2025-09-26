@@ -64,3 +64,5 @@
 126	400	1758770063606302324	libsrc/standalone/src/CMakeFiles/xilstandalone.dir/common/xil_sutil.c.obj	acd3b39a37f638c1
 389	413	1758770063620957935	libsrc/xiltimer/src/libxiltimer.a	bc8f614224f75632
 400	436	1758770063642302728	libsrc/standalone/src/libxilstandalone.a	f63e31ba4c3b4e79
+17	64	0	libsrc/CMakeFiles/combined	d9da3cdf9bd1095a
+17	64	0	/home/min/robo-digger-project/soc/platform_lcd_jy/microblaze_riscv_0/standalone_microblaze_riscv_0/bsp/libsrc/build_configs/gen_bsp/libsrc/CMakeFiles/combined	d9da3cdf9bd1095a

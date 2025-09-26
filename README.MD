@@ -91,4 +91,4 @@
 
 ## 데모 영상
 
-프로젝트 시연 영상은 [여기](링크)에서 확인하실 수 있습니다.
+[![시연 영상](https://img.shields.io/badge/YouTube-시연영상-red?style=for-the-badge&logo=youtube)](https://www.youtube.com/shorts/obiy9c_imKA)에서 확인하실 수 있습니다.
