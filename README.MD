@@ -94,10 +94,10 @@
 [![시연 영상](https://img.shields.io/badge/YouTube-시연영상-red?style=for-the-badge&logo=youtube)](https://www.youtube.com/shorts/obiy9c_imKA)에서 확인하실 수 있습니다.
 
 ### 블레이드 동작
-![블레이드 동작](https://github.com/alsgudrl132/robo-digger-project/issues/1#issue-3455631419)
+![블레이드 동작](https://github.com/user-attachments/assets/cd2b44f1-721e-4e37-be22-ee00acefc270)
 
-### DC모터 주행 (바퀴)
-![DC모터 주행](https://github.com/alsgudrl132/robo-digger-project/issues/2#issue-3455631815)
+### DC모터 주행 (바퀴)  
+![DC모터 주행](https://github.com/user-attachments/assets/7f3f2aad-d133-4998-a3a9-d8944861fbc2)
 
 ### 서보모터 제어
-![서보모터 제어](https://github.com/alsgudrl132/robo-digger-project/issues/3#issue-3455632651)
+![서보모터 제어](https://github.com/user-attachments/assets/69b779c8-5c70-423d-8078-a8ada19d6132)
