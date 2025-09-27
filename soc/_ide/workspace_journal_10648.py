@@ -10,3 +10,5 @@ status = platform.build()
 comp = client.get_component(name="app_lcd_jy")
 comp.build()
 
+vitis.dispose()
+
