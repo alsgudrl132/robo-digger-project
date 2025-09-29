@@ -91,7 +91,7 @@
 
 ## 데모 영상
 
-[![시연 영상](https://img.shields.io/badge/YouTube-시연영상-red?style=for-the-badge&logo=youtube)](https://www.youtube.com/shorts/obiy9c_imKA)에서 확인하실 수 있습니다.
+[![시연 영상](https://img.shields.io/badge/YouTube-시연영상-red?style=for-the-badge&logo=youtube)](https://www.youtube.com/shorts/pE-Q4pc3O5I)에서 확인하실 수 있습니다.
 
 ### 블레이드 동작
 ![블레이드 동작](https://github.com/user-attachments/assets/cd2b44f1-721e-4e37-be22-ee00acefc270)
